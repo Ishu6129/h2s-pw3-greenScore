@@ -1,0 +1,15 @@
+This is a placeholder. In production, replace with actual 192x192 PNG icon.
+For now, the app will work without it, but you should add proper icons before final deployment.
+
+To generate icons quickly:
+1. Use https://realfavicongenerator.net/
+2. Upload a logo (green leaf or plant icon)
+3. Download the generated icons
+4. Replace this file with icon-192.png
+5. Also add icon-512.png
+
+Or use this simple SVG as icon for now - save as PNG:
+<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="192" fill="#10b981"/>
+  <text x="96" y="120" font-size="100" text-anchor="middle" fill="white">🌱</text>
+</svg>
