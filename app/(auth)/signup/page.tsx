@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -17,6 +17,16 @@ export default function SignupPage() {
   const [focusedField, setFocusedField] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
+
+  // Generate stable particle positions
+  const particles = useMemo(() =>
+    Array.from({ length: 20 }, (_, i) => ({
+      left: `${(i * 5 + 5) % 100}%`,
+      top: `${(i * 7 + 10) % 100}%`,
+      delay: (i * 0.15) % 3,
+      duration: 4 + (i % 4)
+    }))
+  , [])
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,8 +66,7 @@ export default function SignupPage() {
 
         setSuccess(true)
         setTimeout(() => {
-          router.push('/dashboard')
-          router.refresh()
+          window.location.href = '/dashboard'
         }, 2000)
       }
     } catch (err: any) {
@@ -138,23 +147,22 @@ export default function SignupPage() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
         
         {/* Particles */}
-        {[...Array(20)].map((_, i) => (
+        {particles.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-green-400 rounded-full"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-              opacity: 0,
-            }}
             animate={{
-              y: [null, Math.random() * window.innerHeight],
+              y: [0, -100, 0],
               opacity: [0, 1, 0],
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: particle.duration,
               repeat: Infinity,
-              delay: Math.random() * 2,
+              delay: particle.delay,
+            }}
+            style={{
+              left: particle.left,
+              top: particle.top,
             }}
           />
         ))}

@@ -2,21 +2,19 @@
 
 import { useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Mail, Lock, User } from 'lucide-react'
+import { Mail, ArrowLeft, CheckCircle } from 'lucide-react'
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
-  const router = useRouter()
   const supabase = createClient()
 
-  // Generate stable particle positions to avoid hydration mismatch
+  // Generate stable particle positions
   const particles = useMemo(() =>
     Array.from({ length: 15 }, (_, i) => ({
       left: `${(i * 7 + 10) % 100}%`,
@@ -26,50 +24,88 @@ export default function LoginPage() {
     }))
   , [])
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
 
     try {
-      // Check if it's demo user first
-      if (email === 'demo@greenscore.com') {
-        const response = await fetch('/api/demo-login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        })
-
-        const result = await response.json()
-
-        if (result.success) {
-          // Store demo user in session storage
-          sessionStorage.setItem('demoUser', JSON.stringify(result.user))
-          window.location.href = '/demo-dashboard'
-          return
-        } else {
-          throw new Error(result.error || 'Invalid demo credentials')
-        }
-      }
-
-      // Regular Supabase authentication
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
       })
 
       if (error) throw error
 
-      if (data.user && data.session) {
-        // Wait a bit for cookies to be set, then redirect
-        await new Promise(resolve => setTimeout(resolve, 500))
-        window.location.href = '/dashboard'
-      }
+      setSuccess(true)
     } catch (err: any) {
-      console.error('Login error:', err)
-      setError(err.message || 'Failed to login')
+      setError(err.message || 'Failed to send reset email')
+    } finally {
       setLoading(false)
     }
+  }
+
+  if (success) {
+    return (
+      <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
+        {/* Animated Dark Background */}
+        <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900">
+          <motion.div
+            animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-20 left-20 w-96 h-96 bg-green-500/20 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ y: [0, 30, 0], x: [0, -20, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-md relative z-10"
+        >
+          <div className="relative">
+            <motion.div
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-3xl blur opacity-75"
+            />
+            
+            <div className="relative bg-gray-900/40 backdrop-blur-2xl rounded-3xl shadow-2xl p-8 border border-green-500/20 text-center">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 200 }}
+                className="flex justify-center mb-6"
+              >
+                <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center">
+                  <CheckCircle className="w-12 h-12 text-green-400" />
+                </div>
+              </motion.div>
+
+              <h1 className="text-3xl font-bold text-white mb-4">
+                Check Your Email
+              </h1>
+              <p className="text-gray-400 mb-8">
+                We've sent a password reset link to <span className="text-green-400 font-semibold">{email}</span>
+              </p>
+
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to login
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    )
   }
 
   return (
@@ -142,7 +178,7 @@ export default function LoginPage() {
                 className="absolute w-24 h-24 border-2 border-green-500/30 rounded-full"
               />
               <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/50 relative z-10">
-                <span className="text-4xl">🌱</span>
+                <span className="text-4xl">🔑</span>
               </div>
             </motion.div>
 
@@ -154,10 +190,10 @@ export default function LoginPage() {
               className="text-center mb-8"
             >
               <h1 className="text-3xl font-bold text-white mb-2">
-                Welcome Back
+                Reset Password
               </h1>
               <p className="text-gray-400">
-                Continue your journey to a greener planet
+                Enter your email to receive a reset link
               </p>
             </motion.div>
 
@@ -172,8 +208,8 @@ export default function LoginPage() {
               </motion.div>
             )}
 
-            {/* Login Form */}
-            <form onSubmit={handleLogin} className="space-y-6">
+            {/* Reset Form */}
+            <form onSubmit={handleResetPassword} className="space-y-6">
               {/* Email Field */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -212,57 +248,11 @@ export default function LoginPage() {
                 </div>
               </motion.div>
 
-              {/* Password Field */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-                className="relative"
-              >
-                <div className="flex justify-between items-center mb-2">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-gray-300"
-                  >
-                    Password
-                  </label>
-                  <Link
-                    href="/forgot-password"
-                    className="text-sm text-green-400 hover:text-green-300 transition-colors"
-                  >
-                    Forgot?
-                  </Link>
-                </div>
-                <div className="relative">
-                  {focusedField === 'password' && (
-                    <motion.div
-                      layoutId="inputGlow"
-                      className="absolute inset-0 bg-green-500/10 rounded-xl blur-xl"
-                    />
-                  )}
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
-                    <Lock className="w-5 h-5 text-green-400" />
-                  </div>
-                  <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    onFocus={() => setFocusedField('password')}
-                    onBlur={() => setFocusedField(null)}
-                    required
-                    autoComplete="current-password"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-green-500/20 bg-gray-800/50 text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 relative"
-                    placeholder="••••••••"
-                  />
-                </div>
-              </motion.div>
-
               {/* Submit Button */}
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.5 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
@@ -297,28 +287,28 @@ export default function LoginPage() {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         />
                       </svg>
-                      Signing in...
+                      Sending...
                     </>
                   ) : (
-                    'Sign In'
+                    'Send Reset Link'
                   )}
                 </span>
               </motion.button>
             </form>
 
-            {/* Sign Up Link */}
+            {/* Back to Login */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 0.6 }}
               className="mt-6 text-center text-sm text-gray-400"
             >
-              Don't have an account?{' '}
+              Remember your password?{' '}
               <Link
-                href="/signup"
+                href="/login"
                 className="font-semibold text-green-400 hover:text-green-300 transition-colors"
               >
-                Sign up for free
+                Sign in
               </Link>
             </motion.p>
           </div>
@@ -328,14 +318,15 @@ export default function LoginPage() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 0.7 }}
           className="mt-6 text-center"
         >
           <Link
             href="/"
             className="text-sm text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2"
           >
-            <span>←</span> Back to home
+            <ArrowLeft className="w-4 h-4" />
+            Back to home
           </Link>
         </motion.div>
       </motion.div>
