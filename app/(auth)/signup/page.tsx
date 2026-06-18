@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Leaf, Mail, Lock, User, ArrowRight, CheckCircle2 } from 'lucide-react'
@@ -15,7 +14,6 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
-  const router = useRouter()
   const supabase = createClient()
 
   // Generate stable particle positions

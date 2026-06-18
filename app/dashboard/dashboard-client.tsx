@@ -17,7 +17,6 @@ export default function DashboardClient({
   user,
   activities,
   challenges,
-  marketplaceItems,
 }: DashboardClientProps) {
   const router = useRouter()
   const supabase = createClient()
@@ -32,7 +31,6 @@ export default function DashboardClient({
 
   const scorePercentage = ((user.carbon_score - 300) / 550) * 100
   const level = user.level || 1
-  const xpForNextLevel = level * 1000
   const xpProgress = (user.total_xp % 1000) / 10
 
   // Stable particles for consistent rendering
@@ -303,7 +301,7 @@ export default function DashboardClient({
                           +{activity.xp_earned} XP
                         </p>
                         <p className="text-sm text-gray-400">
-                          {activity.co2_saved.toFixed(2)} kg CO₂
+                          {activity.carbon_offset.toFixed(2)} kg CO₂
                         </p>
                       </div>
                     </motion.div>

@@ -12,7 +12,7 @@ export async function testSupabaseConnection() {
 
   try {
     // Test 1: Check if we can connect
-    const { data: healthCheck, error: healthError } = await supabase
+    const { error: healthError } = await supabase
       .from('users')
       .select('count')
       .limit(1);

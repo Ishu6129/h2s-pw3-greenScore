@@ -9,6 +9,7 @@ export interface User {
   avatar_url: string | null;
   carbon_score: number;
   total_xp: number;
+  level: number;
   current_streak: number;
   longest_streak: number;
   last_activity_date: string | null;
