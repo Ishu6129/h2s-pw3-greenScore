@@ -17,11 +17,11 @@ export const BASE_XP_REWARDS: Record<ActivityType, number> = {
  * XP multipliers for streaks
  */
 export const STREAK_MULTIPLIERS = {
-  7: 1.2,   // 7-day streak: 20% bonus
-  14: 1.5,  // 14-day streak: 50% bonus
-  30: 2.0,  // 30-day streak: 100% bonus
-  60: 2.5,  // 60-day streak: 150% bonus
-  90: 3.0,  // 90-day streak: 200% bonus
+  7: 1.2, // 7-day streak: 20% bonus
+  14: 1.5, // 14-day streak: 50% bonus
+  30: 2.0, // 30-day streak: 100% bonus
+  60: 2.5, // 60-day streak: 150% bonus
+  90: 3.0, // 90-day streak: 200% bonus
 };
 
 /**

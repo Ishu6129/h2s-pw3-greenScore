@@ -26,30 +26,35 @@ GreenScore is a **gamified carbon footprint tracking platform** that transforms 
 ## ✨ Key Features
 
 ### 1. Gamification Engine
+
 - **XP System**: Earn points for every eco-friendly action
 - **Streak Tracking**: Daily engagement with multipliers (1.2x to 3.0x)
 - **25 Levels**: Progressive difficulty and rewards
 - **Achievement System**: Unlock badges and titles
 
 ### 2. Carbon Tracking
+
 - **7 Activity Types**: Cycling, recycling, public transport, energy saving, plant-based meals, renewable energy, water conservation
 - **Scientific Calculations**: Based on real emission factors
 - **Carbon Score**: 300-850 scale (like credit scores)
 - **Visual Analytics**: Beautiful charts and progress indicators
 
 ### 3. AI Recommendations
+
 - **Personalized Tips**: Google Gemini analyzes user habits
 - **Impact Predictions**: See potential CO₂ savings
 - **Smart Suggestions**: Context-aware recommendations
 - **Learning System**: Improves over time
 
 ### 4. Social Features
+
 - **Leaderboards**: Compete with friends and community
 - **Community Challenges**: Team-based goals
 - **Sharing**: Celebrate achievements on social media
 - **Notifications**: Stay engaged with reminders
 
 ### 5. Virtual Marketplace
+
 - **Badges & Icons**: Customize your profile
 - **Themes**: Unlock new color schemes
 - **Titles**: Show off achievements
@@ -60,19 +65,21 @@ GreenScore is a **gamified carbon footprint tracking platform** that transforms 
 ### Code Quality ⭐⭐⭐⭐⭐
 
 #### TypeScript Strict Mode
+
 ```typescript
 // 100% type coverage, no implicit any
 interface User {
-  id: string
-  email: string
-  carbon_score: number
-  total_xp: number
-  level: number
-  current_streak: number
+  id: string;
+  email: string;
+  carbon_score: number;
+  total_xp: number;
+  level: number;
+  current_streak: number;
 }
 ```
 
 #### Clean Architecture
+
 ```
 app/                    # Next.js 15 App Router
 ├── (auth)/            # Authentication pages
@@ -94,6 +101,7 @@ types/                # Type definitions
 ```
 
 #### Code Metrics
+
 - **Lines of Code**: ~3,500
 - **Type Coverage**: 100%
 - **Components**: 15+
@@ -103,6 +111,7 @@ types/                # Type definitions
 ### Security ⭐⭐⭐⭐⭐
 
 #### Row Level Security (RLS)
+
 ```sql
 -- Users can only see their own data
 CREATE POLICY "Users can view own profile"
@@ -116,6 +125,7 @@ USING (auth.uid() = user_id);
 ```
 
 #### Authentication
+
 - ✅ Secure email/password with Supabase Auth
 - ✅ OAuth support (Google)
 - ✅ Protected routes with middleware
@@ -123,6 +133,7 @@ USING (auth.uid() = user_id);
 - ✅ HTTPS enforced
 
 #### Best Practices
+
 - ✅ Environment variables for secrets
 - ✅ Input validation
 - ✅ SQL injection prevention
@@ -132,6 +143,7 @@ USING (auth.uid() = user_id);
 ### Performance ⭐⭐⭐⭐⭐
 
 #### Optimization Techniques
+
 - **Server-Side Rendering**: Fast initial page load
 - **Code Splitting**: Load only what's needed
 - **Image Optimization**: Next.js automatic optimization
@@ -140,6 +152,7 @@ USING (auth.uid() = user_id);
 - **Caching**: Supabase query caching
 
 #### Metrics
+
 - **Lighthouse Score**: 95+ (Performance)
 - **First Contentful Paint**: < 1.5s
 - **Time to Interactive**: < 3s
@@ -148,6 +161,7 @@ USING (auth.uid() = user_id);
 ### Maintainability ⭐⭐⭐⭐⭐
 
 #### Documentation
+
 - ✅ Comprehensive README.md
 - ✅ Deployment guide
 - ✅ Technical architecture docs
@@ -155,6 +169,7 @@ USING (auth.uid() = user_id);
 - ✅ Type definitions
 
 #### Testing
+
 - ✅ Manual testing checklist
 - ✅ Database connection tests
 - ✅ Authentication flow tests
@@ -162,6 +177,7 @@ USING (auth.uid() = user_id);
 - ✅ Mobile device testing
 
 #### Modularity
+
 - ✅ Reusable components
 - ✅ Separation of concerns
 - ✅ Clear interfaces
@@ -170,24 +186,28 @@ USING (auth.uid() = user_id);
 ### Usability ⭐⭐⭐⭐⭐
 
 #### Responsive Design
+
 - ✅ Mobile-first approach
 - ✅ Tablet optimization
 - ✅ Desktop layouts
 - ✅ Touch-friendly interactions
 
 #### Animations
+
 - ✅ Framer Motion for smooth transitions
 - ✅ Micro-interactions
 - ✅ Loading states
 - ✅ Gesture support
 
 #### Accessibility
+
 - ✅ Semantic HTML
 - ✅ ARIA labels
 - ✅ Keyboard navigation
 - ✅ Color contrast (WCAG AA)
 
 #### Cross-Platform
+
 - ✅ PWA support
 - ✅ iOS compatible
 - ✅ Android compatible
@@ -197,12 +217,14 @@ USING (auth.uid() = user_id);
 ## 🎨 Design System
 
 ### Visual Identity
+
 - **Primary Color**: Green (#10b981) - Growth & Nature
 - **Accent Color**: Emerald (#059669) - Energy & Action
 - **Typography**: Geist Sans (Modern & Clean)
 - **Style**: Glassmorphism with backdrop blur
 
 ### UI Components
+
 - **Cards**: Rounded corners, subtle shadows
 - **Buttons**: Gradient backgrounds, hover effects
 - **Inputs**: Focus states, validation feedback
@@ -212,6 +234,7 @@ USING (auth.uid() = user_id);
 ## 📊 Database Architecture
 
 ### Schema (14 Tables)
+
 ```
 users                    # User profiles
 ├── activities          # Logged actions
@@ -227,6 +250,7 @@ activity_logs          # Audit trail
 ```
 
 ### Performance
+
 - ✅ Indexes on foreign keys
 - ✅ Composite indexes for queries
 - ✅ Efficient query patterns
@@ -235,6 +259,7 @@ activity_logs          # Audit trail
 ## 🚀 Deployment
 
 ### Production Ready
+
 - ✅ Builds successfully
 - ✅ No TypeScript errors
 - ✅ No console warnings
@@ -243,11 +268,13 @@ activity_logs          # Audit trail
 - ✅ RLS policies enabled
 
 ### Deployment Options
+
 1. **Vercel** (Recommended) - One-click deploy
 2. **Netlify** - Alternative platform
 3. **Docker** - Self-hosted option
 
 ### Time to Deploy
+
 - **Setup**: 5 minutes
 - **Build**: 2 minutes
 - **Total**: ~10 minutes
@@ -255,6 +282,7 @@ activity_logs          # Audit trail
 ## 🎯 Hackathon Criteria Compliance
 
 ### ✅ Code Cleanliness & Readability (10/10)
+
 - TypeScript strict mode with 100% type coverage
 - Consistent naming conventions
 - Comprehensive comments
@@ -262,6 +290,7 @@ activity_logs          # Audit trail
 - Clear file organization
 
 ### ✅ Security & Safe Practices (10/10)
+
 - Row Level Security on all tables
 - Secure authentication
 - Environment variables
@@ -269,6 +298,7 @@ activity_logs          # Audit trail
 - Protected routes
 
 ### ✅ Resource Efficiency (10/10)
+
 - Server-side rendering
 - Code splitting
 - Efficient queries
@@ -276,6 +306,7 @@ activity_logs          # Audit trail
 - Minimal bundle size
 
 ### ✅ Testability & Maintainability (10/10)
+
 - Modular components
 - Type-safe interfaces
 - Clear documentation
@@ -283,6 +314,7 @@ activity_logs          # Audit trail
 - Comprehensive tests
 
 ### ✅ Usability & Compatibility (10/10)
+
 - Responsive design
 - Cross-platform PWA
 - Smooth animations
@@ -300,16 +332,19 @@ activity_logs          # Audit trail
 ## 📈 Impact Potential
 
 ### User Engagement
+
 - **Daily Active Users**: Streak system encourages daily use
 - **Retention**: Gamification increases long-term engagement
 - **Viral Growth**: Social features drive organic sharing
 
 ### Environmental Impact
+
 - **CO₂ Tracking**: Accurate measurement of savings
 - **Behavior Change**: Challenges promote sustainable habits
 - **Community Effect**: Leaderboards create positive competition
 
 ### Scalability
+
 - **Database**: Supabase scales automatically
 - **Frontend**: Vercel edge network
 - **Cost**: Free tier supports 50,000+ users
@@ -346,6 +381,7 @@ activity_logs          # Audit trail
 ## 📝 Judges' Notes
 
 ### Quick Start
+
 ```bash
 # Clone and run locally
 git clone [repo-url]
@@ -355,10 +391,12 @@ npm run dev
 ```
 
 ### Test Account
+
 - Email: `demo@greenscore.app`
 - Password: `Demo123!`
 
 ### Key Files to Review
+
 - `app/dashboard/dashboard-client.tsx` - Main UI
 - `lib/utils/carbon-calculator.ts` - Business logic
 - `supabase/migrations/` - Database schema

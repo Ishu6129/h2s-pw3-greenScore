@@ -12,6 +12,7 @@
 ### 1. Supabase Configuration
 
 Your Supabase credentials are already configured in `.env`:
+
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://kvqyrjjfyhfoohrqoobu.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
@@ -20,6 +21,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ### 2. Database Migrations
 
 All migrations have been applied:
+
 - ✅ Core schema (users, activities, challenges, marketplace)
 - ✅ Row Level Security policies
 - ✅ Admin system and notifications
@@ -28,16 +30,19 @@ All migrations have been applied:
 ## 📦 Local Testing
 
 1. **Install dependencies:**
+
 ```bash
 npm install
 ```
 
 2. **Run development server:**
+
 ```bash
 npm run dev
 ```
 
 3. **Test the application:**
+
 - Visit http://localhost:3000
 - Sign up for a new account
 - Test login/logout
@@ -48,27 +53,32 @@ npm run dev
 ### Option 1: Vercel CLI (Recommended)
 
 1. **Install Vercel CLI:**
+
 ```bash
 npm i -g vercel
 ```
 
 2. **Login to Vercel:**
+
 ```bash
 vercel login
 ```
 
 3. **Deploy:**
+
 ```bash
 vercel
 ```
 
 4. **Set environment variables:**
+
 ```bash
 vercel env add NEXT_PUBLIC_SUPABASE_URL
 vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY
 ```
 
 5. **Deploy to production:**
+
 ```bash
 vercel --prod
 ```
@@ -76,6 +86,7 @@ vercel --prod
 ### Option 2: Vercel Dashboard
 
 1. **Push to GitHub:**
+
 ```bash
 git init
 git add .
@@ -86,6 +97,7 @@ git push -u origin main
 ```
 
 2. **Import to Vercel:**
+
 - Go to https://vercel.com/new
 - Import your GitHub repository
 - Configure project:
@@ -95,10 +107,12 @@ git push -u origin main
   - Output Directory: .next
 
 3. **Add Environment Variables:**
+
 - `NEXT_PUBLIC_SUPABASE_URL`: `https://kvqyrjjfyhfoohrqoobu.supabase.co`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your anon key from `.env`
 
 4. **Deploy:**
+
 - Click "Deploy"
 - Wait 2-3 minutes for build to complete
 
@@ -138,6 +152,7 @@ git push -u origin main
 ## 🎯 Production URLs
 
 After deployment, you'll get:
+
 - **Production URL**: `https://your-app.vercel.app`
 - **Preview URLs**: Automatic for each git push
 
@@ -151,7 +166,8 @@ After deployment, you'll get:
 ### Authentication Not Working
 
 **Issue**: Users can't sign up/login
-**Solution**: 
+**Solution**:
+
 1. Check Supabase URL and anon key are correct
 2. Verify email provider is enabled in Supabase
 3. Check browser console for errors
@@ -160,6 +176,7 @@ After deployment, you'll get:
 
 **Issue**: Dashboard shows no data
 **Solution**:
+
 1. Verify RLS policies are enabled
 2. Check user is authenticated
 3. Test database connection at `/test` route
@@ -168,6 +185,7 @@ After deployment, you'll get:
 
 **Issue**: Infinite redirects
 **Solution**:
+
 1. Clear browser cookies
 2. Check middleware.ts configuration
 3. Verify Supabase session is valid
@@ -175,6 +193,7 @@ After deployment, you'll get:
 ## 📊 Performance Optimization
 
 The app is already optimized with:
+
 - ✅ Server-side rendering (SSR)
 - ✅ Code splitting
 - ✅ Image optimization
@@ -194,6 +213,7 @@ The app is already optimized with:
 ## 📱 PWA Features
 
 The app works as a Progressive Web App:
+
 - ✅ Installable on mobile/desktop
 - ✅ Offline support (service worker)
 - ✅ App manifest configured
@@ -210,6 +230,7 @@ The app works as a Progressive Web App:
 ## 📈 Monitoring
 
 After deployment, monitor:
+
 - Vercel Analytics (automatic)
 - Supabase Dashboard → Database → Logs
 - Browser DevTools → Console for errors
@@ -228,6 +249,7 @@ After deployment, monitor:
 ## 📞 Support
 
 If you encounter issues:
+
 1. Check Vercel deployment logs
 2. Check Supabase logs
 3. Review browser console errors

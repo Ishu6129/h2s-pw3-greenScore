@@ -38,6 +38,8 @@ describe('XP Calculator Utilities', () => {
       expect(getStreakMultiplier(7)).toBe(1.2);
       expect(getStreakMultiplier(14)).toBe(1.5);
       expect(getStreakMultiplier(30)).toBe(2.0);
+      expect(getStreakMultiplier(60)).toBe(2.5);
+      expect(getStreakMultiplier(90)).toBe(3.0);
       expect(getStreakMultiplier(100)).toBe(3.0);
     });
   });
@@ -85,6 +87,9 @@ describe('XP Calculator Utilities', () => {
       expect(getLevelTitle(1)).toBe('Eco Beginner');
       expect(getLevelTitle(6)).toBe('Green Enthusiast');
       expect(getLevelTitle(15)).toBe('Environmental Advocate');
+      expect(getLevelTitle(25)).toBe('Sustainability Expert');
+      expect(getLevelTitle(35)).toBe('Green Guardian');
+      expect(getLevelTitle(45)).toBe('Eco Warrior');
       expect(getLevelTitle(55)).toBe('Climate Champion');
     });
   });
@@ -92,8 +97,13 @@ describe('XP Calculator Utilities', () => {
   describe('getStreakBonusXP', () => {
     test('returns correct bonus XP', () => {
       expect(getStreakBonusXP(0)).toBe(0);
+      expect(getStreakBonusXP(5)).toBe(0);
       expect(getStreakBonusXP(7)).toBe(30);
+      expect(getStreakBonusXP(14)).toBe(75);
       expect(getStreakBonusXP(30)).toBe(150);
+      expect(getStreakBonusXP(60)).toBe(300);
+      expect(getStreakBonusXP(90)).toBe(500);
+      expect(getStreakBonusXP(100)).toBe(500);
     });
   });
 });

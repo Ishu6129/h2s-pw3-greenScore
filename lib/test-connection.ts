@@ -13,10 +13,7 @@ export async function testSupabaseConnection() {
 
   try {
     // Test 1: Check if we can connect
-    const { error: healthError } = await supabase
-      .from('users')
-      .select('count')
-      .limit(1);
+    const { error: healthError } = await supabase.from('users').select('count').limit(1);
 
     if (healthError) {
       console.error('❌ Connection Error:', healthError.message);
@@ -102,10 +99,7 @@ export async function testChallengesData() {
   console.log('\n🎯 Testing Challenges Data...');
 
   try {
-    const { data, error } = await supabase
-      .from('challenges')
-      .select('*')
-      .limit(5);
+    const { data, error } = await supabase.from('challenges').select('*').limit(5);
 
     if (error) {
       console.error('❌ Error fetching challenges:', error.message);
@@ -134,10 +128,7 @@ export async function testMarketplaceData() {
   console.log('\n🛍️ Testing Marketplace Data...');
 
   try {
-    const { data, error } = await supabase
-      .from('marketplace_items')
-      .select('*')
-      .limit(5);
+    const { data, error } = await supabase.from('marketplace_items').select('*').limit(5);
 
     if (error) {
       console.error('❌ Error fetching marketplace items:', error.message);

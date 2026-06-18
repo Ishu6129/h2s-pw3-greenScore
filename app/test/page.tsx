@@ -62,9 +62,7 @@ export default function TestPage() {
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="mb-2 text-4xl font-bold">Database Connection Test</h1>
-            <p className="text-neutral-400">
-              Testing Supabase connection and database setup
-            </p>
+            <p className="text-neutral-400">Testing Supabase connection and database setup</p>
           </div>
           <button
             onClick={runTest}
@@ -129,7 +127,9 @@ export default function TestPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-neutral-400">API Key:</span>
-                  <span className={result.connection.hasKey ? 'text-primary-500' : 'text-danger-500'}>
+                  <span
+                    className={result.connection.hasKey ? 'text-primary-500' : 'text-danger-500'}
+                  >
                     {result.connection.hasKey ? '✅ Present' : '❌ Missing'}
                   </span>
                 </div>
@@ -157,10 +157,7 @@ export default function TestPage() {
                   </h3>
                   <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                     {result.database.existingTables.map((table) => (
-                      <div
-                        key={table}
-                        className="rounded-lg bg-primary-500/10 px-3 py-2 text-sm"
-                      >
+                      <div key={table} className="rounded-lg bg-primary-500/10 px-3 py-2 text-sm">
                         {table}
                       </div>
                     ))}
@@ -175,10 +172,7 @@ export default function TestPage() {
                   </h3>
                   <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                     {result.database.missingTables.map((table) => (
-                      <div
-                        key={table}
-                        className="rounded-lg bg-danger-500/10 px-3 py-2 text-sm"
-                      >
+                      <div key={table} className="rounded-lg bg-danger-500/10 px-3 py-2 text-sm">
                         {table}
                       </div>
                     ))}
@@ -209,9 +203,7 @@ export default function TestPage() {
                   </div>
                   {result.data.challenges.sample && (
                     <div className="mt-3 rounded-lg bg-neutral-900 p-3">
-                      <p className="text-sm font-semibold">
-                        {result.data.challenges.sample.title}
-                      </p>
+                      <p className="text-sm font-semibold">{result.data.challenges.sample.title}</p>
                       <p className="text-xs text-neutral-400">
                         {result.data.challenges.sample.description}
                       </p>
@@ -240,9 +232,7 @@ export default function TestPage() {
                   </div>
                   {result.data.marketplace.sample && (
                     <div className="mt-3 rounded-lg bg-neutral-900 p-3">
-                      <p className="text-sm font-semibold">
-                        {result.data.marketplace.sample.name}
-                      </p>
+                      <p className="text-sm font-semibold">{result.data.marketplace.sample.name}</p>
                       <p className="text-xs text-neutral-400">
                         {result.data.marketplace.sample.price} points
                       </p>

@@ -24,9 +24,7 @@ export async function GET() {
       connection: connectionTest.success ? '✅ Connected' : '❌ Failed',
       existingTables: connectionTest.existingCount || 0,
       totalTables: connectionTest.totalTables || 14,
-      challenges: challengesTest.success
-        ? `✅ ${challengesTest.count} found`
-        : '❌ Not accessible',
+      challenges: challengesTest.success ? `✅ ${challengesTest.count} found` : '❌ Not accessible',
       marketplace: marketplaceTest.success
         ? `✅ ${marketplaceTest.count} found`
         : '❌ Not accessible',

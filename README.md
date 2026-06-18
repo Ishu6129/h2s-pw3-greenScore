@@ -25,29 +25,34 @@ Design a solution that helps individuals understand, track, and reduce their car
 ## ✨ Key Features
 
 ### 🎮 Gamification Engine
+
 - **XP System**: Earn points for eco-friendly actions
 - **Streak Tracking**: Daily engagement rewards with multipliers (1.2x to 3.0x)
 - **Level Progression**: 25 levels with increasing challenges
 - **Achievement Badges**: Unlock rewards for milestones
 
 ### 📊 Carbon Tracking
+
 - **7 Activity Types**: Cycling, recycling, public transport, energy saving, plant-based meals, renewable energy, water conservation
 - **Scientific Calculations**: Based on real emission factors
 - **Visual Analytics**: Beautiful charts and progress indicators
 - **Historical Data**: Track your journey over time
 
 ### 🤖 AI Recommendations
+
 - **Personalized Tips**: Google Gemini AI analyzes your habits
 - **Impact Predictions**: See potential CO₂ savings
 - **Smart Suggestions**: Context-aware recommendations
 
 ### 🏆 Challenges System
+
 - **Daily Challenges**: New goals every day
 - **Weekly Missions**: Longer-term objectives
 - **Community Events**: Compete with others
 - **Progress Tracking**: Visual indicators for each challenge
 
 ### 🛍️ Virtual Marketplace
+
 - **Badges & Icons**: Customize your profile
 - **Themes**: Unlock new color schemes
 - **Titles**: Show off your achievements
@@ -56,6 +61,7 @@ Design a solution that helps individuals understand, track, and reduce their car
 ## 🏗️ Technical Architecture
 
 ### Frontend
+
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript (Strict Mode)
 - **Styling**: Tailwind CSS v4 with custom design system
@@ -63,12 +69,14 @@ Design a solution that helps individuals understand, track, and reduce their car
 - **State Management**: React Server Components + Client Components
 
 ### Backend
+
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth (Email + OAuth)
 - **Real-time**: Supabase Realtime subscriptions
 - **Security**: Row Level Security (RLS) on all tables
 
 ### Database Schema
+
 ```
 users (profiles, scores, streaks)
 ├── activities (logged actions)
@@ -86,17 +94,20 @@ activity_logs (audit trail)
 ## 🎨 Design System
 
 ### Color Palette
+
 - **Primary**: Green (#10b981) - Growth & Nature
 - **Accent**: Emerald (#059669) - Energy & Action
 - **Background**: Gradient from green-50 to teal-50
 - **Text**: Gray scale for readability
 
 ### Typography
+
 - **Headings**: Geist Sans (Bold)
 - **Body**: Geist Sans (Regular)
 - **Code**: Geist Mono
 
 ### Components
+
 - **Glassmorphism**: Backdrop blur with transparency
 - **Rounded Corners**: 2xl (16px) for modern feel
 - **Shadows**: Layered for depth
@@ -105,6 +116,7 @@ activity_logs (audit trail)
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - npm or yarn
 - Supabase account
@@ -112,39 +124,46 @@ activity_logs (audit trail)
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone <your-repo-url>
 cd cbPrint
 ```
 
 2. **Install dependencies**
+
 ```bash
 npm install
 ```
 
 3. **Set up environment variables**
+
 ```bash
 cp .env.example .env
 ```
 
 Edit `.env` with your Supabase credentials:
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 ```
 
 4. **Run database migrations**
+
 ```bash
 # Migrations are in supabase/migrations/
 # Apply them in your Supabase dashboard or using Supabase CLI
 ```
 
 5. **Start development server**
+
 ```bash
 npm run dev
 ```
 
 6. **Open browser**
+
 ```
 http://localhost:3000
 ```
@@ -152,6 +171,7 @@ http://localhost:3000
 ## 📱 Progressive Web App
 
 GreenScore works as a PWA:
+
 - ✅ Installable on mobile and desktop
 - ✅ Offline support
 - ✅ Push notifications (coming soon)
@@ -160,18 +180,21 @@ GreenScore works as a PWA:
 ## 🔒 Security Features
 
 ### Authentication
+
 - ✅ Secure email/password authentication
 - ✅ OAuth support (Google)
 - ✅ Protected routes with middleware
 - ✅ Session management
 
 ### Database Security
+
 - ✅ Row Level Security (RLS) on all tables
 - ✅ User-specific data isolation
 - ✅ Admin role separation
 - ✅ Audit logging
 
 ### Best Practices
+
 - ✅ Environment variables for secrets
 - ✅ HTTPS enforced
 - ✅ CORS configured
@@ -181,12 +204,14 @@ GreenScore works as a PWA:
 ## 📊 Code Quality
 
 ### TypeScript
+
 - **Strict Mode**: Enabled
 - **Type Coverage**: 100%
 - **No Implicit Any**: Enforced
 - **Null Checks**: Strict
 
 ### Code Organization
+
 ```
 app/                    # Next.js app directory
 ├── (auth)/            # Authentication pages
@@ -208,6 +233,7 @@ supabase/             # Database
 ```
 
 ### Performance Optimizations
+
 - ✅ Server-side rendering (SSR)
 - ✅ Code splitting
 - ✅ Image optimization
@@ -218,6 +244,7 @@ supabase/             # Database
 ## 🧪 Testing
 
 ### Manual Testing Checklist
+
 - [x] User registration
 - [x] User login/logout
 - [x] Dashboard data loading
@@ -228,12 +255,14 @@ supabase/             # Database
 - [x] Cross-browser compatibility
 
 ### Browser Support
+
 - ✅ Chrome 90+
 - ✅ Firefox 88+
 - ✅ Safari 14+
 - ✅ Edge 90+
 
 ### Device Support
+
 - ✅ Desktop (1920x1080+)
 - ✅ Laptop (1366x768+)
 - ✅ Tablet (768x1024)
@@ -249,6 +278,7 @@ supabase/             # Database
 ## 🎯 Hackathon Criteria Compliance
 
 ### ✅ Code Cleanliness & Readability
+
 - TypeScript strict mode with 100% type coverage
 - Consistent naming conventions
 - Comprehensive comments
@@ -256,6 +286,7 @@ supabase/             # Database
 - Clear file organization
 
 ### ✅ Security & Safe Practices
+
 - Row Level Security on all database tables
 - Secure authentication with Supabase
 - Environment variables for secrets
@@ -263,6 +294,7 @@ supabase/             # Database
 - Protected routes with middleware
 
 ### ✅ Resource Efficiency
+
 - Server-side rendering for optimal performance
 - Code splitting and lazy loading
 - Efficient database queries with indexes
@@ -270,6 +302,7 @@ supabase/             # Database
 - Minimal bundle size
 
 ### ✅ Testability & Maintainability
+
 - Modular component structure
 - Separation of concerns
 - Type-safe interfaces
@@ -277,6 +310,7 @@ supabase/             # Database
 - Easy to extend and modify
 
 ### ✅ Usability & Compatibility
+
 - Responsive design (mobile-first)
 - Cross-platform PWA support
 - Smooth animations and transitions
@@ -302,6 +336,7 @@ supabase/             # Database
 ### Quick Deploy to Vercel
 
 1. **Push to GitHub**
+
 ```bash
 git init
 git add .
@@ -310,6 +345,7 @@ git push
 ```
 
 2. **Deploy to Vercel**
+
 - Go to https://vercel.com/new
 - Import your repository
 - Add environment variables
@@ -346,6 +382,7 @@ Built with ❤️ by Bob for the Hack2Skill Hackathon
 ## 📞 Contact
 
 For questions or feedback:
+
 - GitHub Issues: [Create an issue]
 - Email: your-email@example.com
 
@@ -353,4 +390,4 @@ For questions or feedback:
 
 **Made with 🌱 for a greener planet**
 
-*Last Updated: June 2026*
+_Last Updated: June 2026_

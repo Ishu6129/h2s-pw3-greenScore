@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 // Demo user credentials
 const DEMO_USER = {
@@ -12,22 +12,22 @@ const DEMO_USER = {
   level: 5,
   current_streak: 7,
   longest_streak: 15,
-}
+};
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json()
+    const { email, password } = await request.json();
 
     // Check if it's the demo user
     if (email === DEMO_USER.email && password === DEMO_USER.password) {
-      const supabase = await createClient()
+      const supabase = await createClient();
 
       // Check if demo user exists in database
       const { data: existingUser } = await supabase
         .from('users')
         .select('*')
         .eq('email', DEMO_USER.email)
-        .single()
+        .single();
 
       // Create demo user if doesn't exist
       if (!existingUser) {
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
           level: DEMO_USER.level,
           current_streak: DEMO_USER.current_streak,
           longest_streak: DEMO_USER.longest_streak,
-        })
+        });
       }
 
       // Return success with user data
@@ -48,20 +48,14 @@ export async function POST(request: Request) {
         success: true,
         user: DEMO_USER,
         message: 'Demo login successful',
-      })
+      });
     }
 
     // Not a demo user
-    return NextResponse.json(
-      { success: false, error: 'Invalid credentials' },
-      { status: 401 }
-    )
+    return NextResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 });
   } catch (error) {
-    console.error('Demo login error:', error)
-    return NextResponse.json(
-      { success: false, error: 'Login failed' },
-      { status: 500 }
-    )
+    console.error('Demo login error:', error);
+    return NextResponse.json({ success: false, error: 'Login failed' }, { status: 500 });
   }
 }
 

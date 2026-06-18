@@ -5,6 +5,7 @@ import {
   getActivityDisplayName,
   formatCarbonOffset,
   getScoreLabel,
+  getScoreColor,
 } from '../lib/utils/carbon-calculator';
 
 describe('Carbon Calculator Utilities', () => {
@@ -17,13 +18,33 @@ describe('Carbon Calculator Utilities', () => {
       expect(calculateCarbonOffset('public_transport', 10)).toBe(1.4);
     });
 
+    test('calculates correct offset for recycling', () => {
+      expect(calculateCarbonOffset('recycling', 10)).toBe(4.5);
+    });
+
+    test('calculates correct offset for energy saving', () => {
+      expect(calculateCarbonOffset('energy_saving', 10)).toBe(5);
+    });
+
     test('calculates correct offset for plant-based meal', () => {
       expect(calculateCarbonOffset('plant_based_meal', 2)).toBe(5);
+    });
+
+    test('calculates correct offset for water conservation', () => {
+      expect(calculateCarbonOffset('water_conservation', 1000)).toBe(0.3);
+    });
+
+    test('calculates correct offset for sustainable shopping', () => {
+      expect(calculateCarbonOffset('sustainable_shopping', 2)).toBe(3);
     });
 
     test('throws error for negative or zero amounts', () => {
       expect(() => calculateCarbonOffset('cycling', 0)).toThrow();
       expect(() => calculateCarbonOffset('cycling', -5)).toThrow();
+    });
+
+    test('throws error for unknown activity types', () => {
+      expect(() => calculateCarbonOffset('unknown_type' as any, 10)).toThrow();
     });
   });
 
@@ -72,6 +93,16 @@ describe('Carbon Calculator Utilities', () => {
       expect(getScoreLabel(600)).toBe('Good');
       expect(getScoreLabel(500)).toBe('Fair');
       expect(getScoreLabel(400)).toBe('Needs Improvement');
+    });
+  });
+
+  describe('getScoreColor', () => {
+    test('returns correct Tailwind color class based on score', () => {
+      expect(getScoreColor(800)).toBe('text-primary-500');
+      expect(getScoreColor(700)).toBe('text-primary-400');
+      expect(getScoreColor(600)).toBe('text-yellow-500');
+      expect(getScoreColor(500)).toBe('text-orange-500');
+      expect(getScoreColor(400)).toBe('text-danger-500');
     });
   });
 });

@@ -16,12 +16,7 @@ export type ChallengeType =
   | 'seasonal'
   | 'personal_best';
 
-export type ItemType =
-  | 'badge'
-  | 'avatar_customization'
-  | 'xp_booster'
-  | 'theme'
-  | 'donation';
+export type ItemType = 'badge' | 'avatar_customization' | 'xp_booster' | 'theme' | 'donation';
 
 export interface Database {
   public: {

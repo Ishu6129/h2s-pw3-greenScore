@@ -1,33 +1,35 @@
-'use client'
+'use client';
 
-import { useState, useMemo } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Mail, Lock } from 'lucide-react'
+import { useState, useMemo } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Mail, Lock } from 'lucide-react';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [focusedField, setFocusedField] = useState<string | null>(null)
-  const supabase = createClient()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const supabase = createClient();
 
   // Generate stable particle positions to avoid hydration mismatch
-  const particles = useMemo(() =>
-    Array.from({ length: 15 }, (_, i) => ({
-      left: `${(i * 7 + 10) % 100}%`,
-      top: `${(i * 13 + 5) % 100}%`,
-      delay: (i * 0.2) % 2,
-      duration: 3 + (i % 3)
-    }))
-  , [])
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 15 }, (_, i) => ({
+        left: `${(i * 7 + 10) % 100}%`,
+        top: `${(i * 13 + 5) % 100}%`,
+        delay: (i * 0.2) % 2,
+        duration: 3 + (i % 3),
+      })),
+    []
+  );
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     try {
       // Check if it's demo user first
@@ -36,17 +38,17 @@ export default function LoginPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password }),
-        })
+        });
 
-        const result = await response.json()
+        const result = await response.json();
 
         if (result.success) {
           // Store demo user in session storage
-          sessionStorage.setItem('demoUser', JSON.stringify(result.user))
-          window.location.href = '/demo-dashboard'
-          return
+          sessionStorage.setItem('demoUser', JSON.stringify(result.user));
+          window.location.href = '/demo-dashboard';
+          return;
         } else {
-          throw new Error(result.error || 'Invalid demo credentials')
+          throw new Error(result.error || 'Invalid demo credentials');
         }
       }
 
@@ -54,38 +56,38 @@ export default function LoginPage() {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
-      })
+      });
 
-      if (error) throw error
+      if (error) throw error;
 
       if (data.user && data.session) {
         // Wait a bit for cookies to be set, then redirect
-        await new Promise(resolve => setTimeout(resolve, 500))
-        window.location.href = '/dashboard'
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        window.location.href = '/dashboard';
       }
     } catch (err) {
-      console.error('Login error:', err)
-      setError(err instanceof Error ? err.message : 'Failed to login')
-      setLoading(false)
+      console.error('Login error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to login');
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-4">
       {/* Animated Dark Background */}
       <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900">
         {/* Floating Orbs */}
         <motion.div
           animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-20 left-20 w-96 h-96 bg-green-500/20 rounded-full blur-3xl"
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute left-20 top-20 h-96 w-96 rounded-full bg-green-500/20 blur-3xl"
         />
         <motion.div
           animate={{ y: [0, 30, 0], x: [0, -20, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute bottom-20 right-20 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl"
         />
-        
+
         {/* Floating Particles */}
         {particles.map((particle, i) => (
           <motion.div
@@ -99,7 +101,7 @@ export default function LoginPage() {
               repeat: Infinity,
               delay: particle.delay,
             }}
-            className="absolute w-1 h-1 bg-green-400 rounded-full"
+            className="absolute h-1 w-1 rounded-full bg-green-400"
             style={{
               left: particle.left,
               top: particle.top,
@@ -115,7 +117,7 @@ export default function LoginPage() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md relative z-10"
+        className="relative z-10 w-full max-w-md"
       >
         {/* Glassmorphism Card */}
         <div className="relative">
@@ -123,23 +125,23 @@ export default function LoginPage() {
           <motion.div
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-3xl blur opacity-75"
+            className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-green-500 to-emerald-500 opacity-75 blur"
           />
-          
-          <div className="relative bg-gray-900/40 backdrop-blur-2xl rounded-3xl shadow-2xl p-8 border border-green-500/20">
+
+          <div className="relative rounded-3xl border border-green-500/20 bg-gray-900/40 p-8 shadow-2xl backdrop-blur-2xl">
             {/* Logo with Rotating Halo */}
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-              className="flex justify-center mb-8 relative"
+              className="relative mb-8 flex justify-center"
             >
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute w-24 h-24 border-2 border-green-500/30 rounded-full"
+                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                className="absolute h-24 w-24 rounded-full border-2 border-green-500/30"
               />
-              <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/50 relative z-10">
+              <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg shadow-green-500/50">
                 <span className="text-4xl">🌱</span>
               </div>
             </motion.div>
@@ -149,14 +151,10 @@ export default function LoginPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-center mb-8"
+              className="mb-8 text-center"
             >
-              <h1 className="text-3xl font-bold text-white mb-2">
-                Welcome Back
-              </h1>
-              <p className="text-gray-400">
-                Continue your journey to a greener planet
-              </p>
+              <h1 className="mb-2 text-3xl font-bold text-white">Welcome Back</h1>
+              <p className="text-gray-400">Continue your journey to a greener planet</p>
             </motion.div>
 
             {/* Error Message */}
@@ -164,7 +162,7 @@ export default function LoginPage() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm backdrop-blur-sm"
+                className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400 backdrop-blur-sm"
               >
                 {error}
               </motion.div>
@@ -179,21 +177,18 @@ export default function LoginPage() {
                 transition={{ delay: 0.4 }}
                 className="relative"
               >
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
+                <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-300">
                   Email Address
                 </label>
                 <div className="relative">
                   {focusedField === 'email' && (
                     <motion.div
                       layoutId="inputGlow"
-                      className="absolute inset-0 bg-green-500/10 rounded-xl blur-xl"
+                      className="absolute inset-0 rounded-xl bg-green-500/10 blur-xl"
                     />
                   )}
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
-                    <Mail className="w-5 h-5 text-green-400" />
+                  <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2">
+                    <Mail className="h-5 w-5 text-green-400" />
                   </div>
                   <input
                     id="email"
@@ -204,7 +199,7 @@ export default function LoginPage() {
                     onBlur={() => setFocusedField(null)}
                     required
                     autoComplete="email"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-green-500/20 bg-gray-800/50 text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 relative"
+                    className="relative w-full rounded-xl border border-green-500/20 bg-gray-800/50 py-3 pl-12 pr-4 text-white placeholder-gray-500 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-green-500"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -217,16 +212,13 @@ export default function LoginPage() {
                 transition={{ delay: 0.5 }}
                 className="relative"
               >
-                <div className="flex justify-between items-center mb-2">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-gray-300"
-                  >
+                <div className="mb-2 flex items-center justify-between">
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-300">
                     Password
                   </label>
                   <Link
                     href="/forgot-password"
-                    className="text-sm text-green-400 hover:text-green-300 transition-colors"
+                    className="text-sm text-green-400 transition-colors hover:text-green-300"
                   >
                     Forgot?
                   </Link>
@@ -235,11 +227,11 @@ export default function LoginPage() {
                   {focusedField === 'password' && (
                     <motion.div
                       layoutId="inputGlow"
-                      className="absolute inset-0 bg-green-500/10 rounded-xl blur-xl"
+                      className="absolute inset-0 rounded-xl bg-green-500/10 blur-xl"
                     />
                   )}
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
-                    <Lock className="w-5 h-5 text-green-400" />
+                  <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2">
+                    <Lock className="h-5 w-5 text-green-400" />
                   </div>
                   <input
                     id="password"
@@ -250,7 +242,7 @@ export default function LoginPage() {
                     onBlur={() => setFocusedField(null)}
                     required
                     autoComplete="current-password"
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-green-500/20 bg-gray-800/50 text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 relative"
+                    className="relative w-full rounded-xl border border-green-500/20 bg-gray-800/50 py-3 pl-12 pr-4 text-white placeholder-gray-500 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-green-500"
                     placeholder="••••••••"
                   />
                 </div>
@@ -265,7 +257,7 @@ export default function LoginPage() {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl shadow-lg shadow-green-500/50 hover:shadow-xl hover:shadow-green-500/60 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
+                className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 px-4 py-3 font-semibold text-white shadow-lg shadow-green-500/50 transition-all duration-200 hover:shadow-xl hover:shadow-green-500/60 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500"
@@ -276,10 +268,7 @@ export default function LoginPage() {
                 <span className="relative z-10 flex items-center justify-center">
                   {loading ? (
                     <>
-                      <svg
-                        className="animate-spin h-5 w-5 mr-3"
-                        viewBox="0 0 24 24"
-                      >
+                      <svg className="mr-3 h-5 w-5 animate-spin" viewBox="0 0 24 24">
                         <circle
                           className="opacity-25"
                           cx="12"
@@ -314,7 +303,7 @@ export default function LoginPage() {
               {"Don't have an account? "}
               <Link
                 href="/signup"
-                className="font-semibold text-green-400 hover:text-green-300 transition-colors"
+                className="font-semibold text-green-400 transition-colors hover:text-green-300"
               >
                 Sign up for free
               </Link>
@@ -331,14 +320,14 @@ export default function LoginPage() {
         >
           <Link
             href="/"
-            className="text-sm text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2"
+            className="inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white"
           >
             <span>←</span> Back to home
           </Link>
         </motion.div>
       </motion.div>
     </div>
-  )
+  );
 }
 
 // Made with Bob

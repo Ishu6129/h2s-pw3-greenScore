@@ -3,6 +3,7 @@
 ## Pre-Deployment
 
 ### ✅ Code Quality
+
 - [x] TypeScript strict mode enabled
 - [x] No console errors in development
 - [x] All imports resolved correctly
@@ -11,6 +12,7 @@
 - [x] Code formatted and linted
 
 ### ✅ Database
+
 - [x] All migrations applied
 - [x] RLS policies enabled on all tables
 - [x] Sample data seeded
@@ -18,6 +20,7 @@
 - [x] Indexes created for performance
 
 ### ✅ Authentication
+
 - [x] Login page created
 - [x] Signup page created
 - [x] OAuth callback handler
@@ -26,6 +29,7 @@
 - [x] Session management
 
 ### ✅ Environment Variables
+
 - [x] `.env` file configured locally
 - [x] `.env.example` created for reference
 - [ ] Environment variables added to Vercel
@@ -33,6 +37,7 @@
   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ### ✅ Features
+
 - [x] Landing page with animations
 - [x] Dashboard with real data
 - [x] User profile display
@@ -44,6 +49,7 @@
 - [x] PWA manifest
 
 ### ✅ Documentation
+
 - [x] README.md comprehensive
 - [x] DEPLOYMENT.md guide
 - [x] TECHNICAL_ARCHITECTURE.md
@@ -53,6 +59,7 @@
 ## Deployment Steps
 
 ### 1. Test Locally
+
 ```bash
 # Install dependencies
 npm install
@@ -75,6 +82,7 @@ npm start
 ```
 
 ### 2. Prepare Git Repository
+
 ```bash
 # Initialize git (if not already)
 git init
@@ -94,6 +102,7 @@ git push -u origin main
 ### 3. Deploy to Vercel
 
 #### Option A: Vercel Dashboard
+
 1. Go to https://vercel.com/new
 2. Import your GitHub repository
 3. Configure:
@@ -108,6 +117,7 @@ git push -u origin main
 6. Wait 2-3 minutes
 
 #### Option B: Vercel CLI
+
 ```bash
 # Install Vercel CLI
 npm i -g vercel
@@ -150,6 +160,7 @@ vercel --prod
 ## Post-Deployment Testing
 
 ### ✅ Functionality Tests
+
 - [ ] Visit production URL
 - [ ] Landing page loads correctly
 - [ ] Sign up with new account
@@ -162,6 +173,7 @@ vercel --prod
 - [ ] No console errors
 
 ### ✅ Mobile Testing
+
 - [ ] Test on iPhone (Safari)
 - [ ] Test on Android (Chrome)
 - [ ] Test PWA installation
@@ -170,12 +182,14 @@ vercel --prod
 - [ ] Test responsive layouts
 
 ### ✅ Browser Testing
+
 - [ ] Chrome (latest)
 - [ ] Firefox (latest)
 - [ ] Safari (latest)
 - [ ] Edge (latest)
 
 ### ✅ Performance
+
 - [ ] Run Lighthouse audit
 - [ ] Check Performance score (target: 90+)
 - [ ] Check Accessibility score (target: 90+)
@@ -185,6 +199,7 @@ vercel --prod
 ## Hackathon Submission
 
 ### ✅ Submission Requirements
+
 - [ ] Deployed URL ready
 - [ ] GitHub repository public
 - [ ] README.md complete
@@ -193,12 +208,15 @@ vercel --prod
 - [ ] Presentation slides ready
 
 ### ✅ Demo Account
+
 Create a demo account for judges:
+
 - Email: `demo@greenscore.app`
 - Password: `Demo123!`
 - Pre-populate with sample data
 
 ### ✅ Submission Form
+
 - [ ] Project name: GreenScore
 - [ ] Deployed URL: `https://your-app.vercel.app`
 - [ ] GitHub URL: `https://github.com/your-username/cbPrint`
@@ -209,8 +227,10 @@ Create a demo account for judges:
 ## Troubleshooting
 
 ### Build Fails
+
 **Problem**: TypeScript errors during build
-**Solution**: 
+**Solution**:
+
 ```bash
 npm run build
 # Fix any errors shown
@@ -218,24 +238,30 @@ npm run build
 ```
 
 ### Authentication Issues
+
 **Problem**: Can't login after deployment
 **Solution**:
+
 1. Check Supabase URL configuration
 2. Verify environment variables in Vercel
 3. Check Supabase redirect URLs
 4. Clear browser cookies and try again
 
 ### Database Connection
+
 **Problem**: Dashboard shows no data
 **Solution**:
+
 1. Check RLS policies are enabled
 2. Verify user is authenticated
 3. Check Supabase logs for errors
 4. Test database connection at `/test` route
 
 ### Middleware Redirects
+
 **Problem**: Infinite redirect loop
 **Solution**:
+
 1. Clear browser cookies
 2. Check middleware.ts configuration
 3. Verify Supabase session handling
@@ -244,6 +270,7 @@ npm run build
 ## Success Criteria
 
 ### ✅ All Systems Go
+
 - [x] Application builds successfully
 - [x] Deployed to production
 - [ ] All features working

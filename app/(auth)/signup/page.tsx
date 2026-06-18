@@ -1,35 +1,37 @@
-'use client'
+'use client';
 
-import { useState, useMemo } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Leaf, Mail, Lock, User, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { useState, useMemo } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Leaf, Mail, Lock, User, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export default function SignupPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [focusedField, setFocusedField] = useState<string | null>(null)
-  const supabase = createClient()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const supabase = createClient();
 
   // Generate stable particle positions
-  const particles = useMemo(() =>
-    Array.from({ length: 20 }, (_, i) => ({
-      left: `${(i * 5 + 5) % 100}%`,
-      top: `${(i * 7 + 10) % 100}%`,
-      delay: (i * 0.15) % 3,
-      duration: 4 + (i % 4)
-    }))
-  , [])
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 20 }, (_, i) => ({
+        left: `${(i * 5 + 5) % 100}%`,
+        top: `${(i * 7 + 10) % 100}%`,
+        delay: (i * 0.15) % 3,
+        duration: 4 + (i % 4),
+      })),
+    []
+  );
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     try {
       const { data, error: signUpError } = await supabase.auth.signUp({
@@ -40,67 +42,71 @@ export default function SignupPage() {
             full_name: fullName,
           },
         },
-      })
+      });
 
-      if (signUpError) throw signUpError
+      if (signUpError) throw signUpError;
 
       if (data.user) {
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert({
-            id: data.user.id,
-            email: data.user.email!,
-            full_name: fullName,
-            carbon_score: 500,
-            total_xp: 0,
-            level: 1,
-            current_streak: 0,
-            longest_streak: 0,
-          })
+        const { error: profileError } = await supabase.from('users').insert({
+          id: data.user.id,
+          email: data.user.email!,
+          full_name: fullName,
+          carbon_score: 500,
+          total_xp: 0,
+          level: 1,
+          current_streak: 0,
+          longest_streak: 0,
+        });
 
         if (profileError) {
-          console.error('Profile creation error:', profileError)
+          console.error('Profile creation error:', profileError);
         }
 
-        setSuccess(true)
+        setSuccess(true);
         setTimeout(() => {
-          window.location.href = '/dashboard'
-        }, 2000)
+          window.location.href = '/dashboard';
+        }, 2000);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign up')
+      setError(err instanceof Error ? err.message : 'Failed to sign up');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 p-4">
         {/* Animated background */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute w-96 h-96 bg-green-500/30 rounded-full blur-3xl animate-pulse" style={{ top: '10%', left: '10%' }} />
-          <div className="absolute w-96 h-96 bg-emerald-500/30 rounded-full blur-3xl animate-pulse" style={{ bottom: '10%', right: '10%', animationDelay: '1s' }} />
+          <div
+            className="absolute h-96 w-96 animate-pulse rounded-full bg-green-500/30 blur-3xl"
+            style={{ top: '10%', left: '10%' }}
+          />
+          <div
+            className="absolute h-96 w-96 animate-pulse rounded-full bg-emerald-500/30 blur-3xl"
+            style={{ bottom: '10%', right: '10%', animationDelay: '1s' }}
+          />
         </div>
 
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-          className="text-center relative z-10"
+          className="relative z-10 text-center"
         >
           <motion.div
             animate={{ scale: [1, 1.2, 1], rotate: [0, 360] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-32 h-32 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-green-500/50"
+            className="mx-auto mb-6 flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-600 shadow-2xl shadow-green-500/50"
           >
-            <CheckCircle2 className="w-16 h-16 text-white" />
+            <CheckCircle2 className="h-16 w-16 text-white" />
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-4xl font-bold text-white mb-4"
+            className="mb-4 text-4xl font-bold text-white"
           >
             Welcome to GreenScore! 🎉
           </motion.h2>
@@ -108,17 +114,17 @@ export default function SignupPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-green-200 text-lg"
+            className="text-lg text-green-200"
           >
             Preparing your eco-journey...
           </motion.p>
         </motion.div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 p-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating orbs */}
@@ -128,7 +134,7 @@ export default function SignupPage() {
             x: [0, 20, 0],
           }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute w-96 h-96 bg-green-500/20 rounded-full blur-3xl"
+          className="absolute h-96 w-96 rounded-full bg-green-500/20 blur-3xl"
           style={{ top: '10%', left: '10%' }}
         />
         <motion.div
@@ -137,18 +143,18 @@ export default function SignupPage() {
             x: [0, -20, 0],
           }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          className="absolute w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
+          className="absolute h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl"
           style={{ bottom: '10%', right: '10%' }}
         />
-        
+
         {/* Grid pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        
+
         {/* Particles */}
         {particles.map((particle, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-green-400 rounded-full"
+            className="absolute h-1 w-1 rounded-full bg-green-400"
             animate={{
               y: [0, -100, 0],
               opacity: [0, 1, 0],
@@ -170,29 +176,29 @@ export default function SignupPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md relative z-10"
+        className="relative z-10 w-full max-w-md"
       >
         {/* Glassmorphism card */}
         <div className="relative">
           {/* Glow effect */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl blur-xl opacity-75 animate-pulse" />
-          
-          <div className="relative bg-gray-900/40 backdrop-blur-2xl rounded-3xl p-8 border border-green-500/20 shadow-2xl">
+          <div className="absolute -inset-1 animate-pulse rounded-3xl bg-gradient-to-r from-green-600 to-emerald-600 opacity-75 blur-xl" />
+
+          <div className="relative rounded-3xl border border-green-500/20 bg-gray-900/40 p-8 shadow-2xl backdrop-blur-2xl">
             {/* Logo with animation */}
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-              className="flex justify-center mb-8"
+              className="mb-8 flex justify-center"
             >
               <div className="relative">
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                  className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-600 rounded-full blur-md opacity-50"
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 to-emerald-600 opacity-50 blur-md"
                 />
-                <div className="relative w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
-                  <Leaf className="w-10 h-10 text-white" />
+                <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg">
+                  <Leaf className="h-10 w-10 text-white" />
                 </div>
               </div>
             </motion.div>
@@ -202,16 +208,14 @@ export default function SignupPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-center mb-8"
+              className="mb-8 text-center"
             >
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-2 flex items-center justify-center gap-2">
-                <Sparkles className="w-6 h-6 text-green-400" />
+              <h1 className="mb-2 flex items-center justify-center gap-2 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-3xl font-bold text-transparent">
+                <Sparkles className="h-6 w-6 text-green-400" />
                 Join GreenScore
-                <Sparkles className="w-6 h-6 text-green-400" />
+                <Sparkles className="h-6 w-6 text-green-400" />
               </h1>
-              <p className="text-gray-400">
-                Start your journey to a sustainable future
-              </p>
+              <p className="text-gray-400">Start your journey to a sustainable future</p>
             </motion.div>
 
             {/* Error Message */}
@@ -221,7 +225,7 @@ export default function SignupPage() {
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="mb-6 p-4 bg-red-500/10 backdrop-blur-xl border border-red-500/20 rounded-xl text-red-400 text-sm"
+                  className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400 backdrop-blur-xl"
                 >
                   {error}
                 </motion.div>
@@ -237,16 +241,15 @@ export default function SignupPage() {
                 transition={{ delay: 0.4 }}
                 className="relative"
               >
-                <label
-                  htmlFor="fullName"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
+                <label htmlFor="fullName" className="mb-2 block text-sm font-medium text-gray-300">
                   Full Name
                 </label>
-                <div className="relative group">
-                  <User className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
-                    focusedField === 'fullName' ? 'text-green-400' : 'text-gray-500'
-                  }`} />
+                <div className="group relative">
+                  <User
+                    className={`absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transition-colors ${
+                      focusedField === 'fullName' ? 'text-green-400' : 'text-gray-500'
+                    }`}
+                  />
                   <input
                     id="fullName"
                     type="text"
@@ -256,13 +259,13 @@ export default function SignupPage() {
                     onBlur={() => setFocusedField(null)}
                     required
                     autoComplete="name"
-                    className="w-full pl-12 pr-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-gray-700 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500"
+                    className="w-full rounded-xl border border-gray-700 bg-gray-800/50 py-3 pl-12 pr-4 text-white placeholder-gray-500 backdrop-blur-xl transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-green-500"
                     placeholder="John Doe"
                   />
                   {focusedField === 'fullName' && (
                     <motion.div
                       layoutId="inputGlow"
-                      className="absolute inset-0 bg-green-500/10 rounded-xl -z-10 blur-xl"
+                      className="absolute inset-0 -z-10 rounded-xl bg-green-500/10 blur-xl"
                     />
                   )}
                 </div>
@@ -275,16 +278,15 @@ export default function SignupPage() {
                 transition={{ delay: 0.5 }}
                 className="relative"
               >
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
+                <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-300">
                   Email Address
                 </label>
-                <div className="relative group">
-                  <Mail className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
-                    focusedField === 'email' ? 'text-green-400' : 'text-gray-500'
-                  }`} />
+                <div className="group relative">
+                  <Mail
+                    className={`absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transition-colors ${
+                      focusedField === 'email' ? 'text-green-400' : 'text-gray-500'
+                    }`}
+                  />
                   <input
                     id="email"
                     type="email"
@@ -294,13 +296,13 @@ export default function SignupPage() {
                     onBlur={() => setFocusedField(null)}
                     required
                     autoComplete="email"
-                    className="w-full pl-12 pr-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-gray-700 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500"
+                    className="w-full rounded-xl border border-gray-700 bg-gray-800/50 py-3 pl-12 pr-4 text-white placeholder-gray-500 backdrop-blur-xl transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-green-500"
                     placeholder="you@example.com"
                   />
                   {focusedField === 'email' && (
                     <motion.div
                       layoutId="inputGlow"
-                      className="absolute inset-0 bg-green-500/10 rounded-xl -z-10 blur-xl"
+                      className="absolute inset-0 -z-10 rounded-xl bg-green-500/10 blur-xl"
                     />
                   )}
                 </div>
@@ -313,16 +315,15 @@ export default function SignupPage() {
                 transition={{ delay: 0.6 }}
                 className="relative"
               >
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
+                <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-300">
                   Password
                 </label>
-                <div className="relative group">
-                  <Lock className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${
-                    focusedField === 'password' ? 'text-green-400' : 'text-gray-500'
-                  }`} />
+                <div className="group relative">
+                  <Lock
+                    className={`absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transition-colors ${
+                      focusedField === 'password' ? 'text-green-400' : 'text-gray-500'
+                    }`}
+                  />
                   <input
                     id="password"
                     type="password"
@@ -333,19 +334,17 @@ export default function SignupPage() {
                     required
                     minLength={6}
                     autoComplete="new-password"
-                    className="w-full pl-12 pr-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-gray-700 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500"
+                    className="w-full rounded-xl border border-gray-700 bg-gray-800/50 py-3 pl-12 pr-4 text-white placeholder-gray-500 backdrop-blur-xl transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-green-500"
                     placeholder="••••••••"
                   />
                   {focusedField === 'password' && (
                     <motion.div
                       layoutId="inputGlow"
-                      className="absolute inset-0 bg-green-500/10 rounded-xl -z-10 blur-xl"
+                      className="absolute inset-0 -z-10 rounded-xl bg-green-500/10 blur-xl"
                     />
                   )}
                 </div>
-                <p className="mt-2 text-xs text-gray-500">
-                  Must be at least 6 characters
-                </p>
+                <p className="mt-2 text-xs text-gray-500">Must be at least 6 characters</p>
               </motion.div>
 
               {/* Submit Button */}
@@ -357,7 +356,7 @@ export default function SignupPage() {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading}
-                className="relative w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl shadow-lg overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 px-4 py-3 font-semibold text-white shadow-lg disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {loading ? (
@@ -365,14 +364,14 @@ export default function SignupPage() {
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                        className="h-5 w-5 rounded-full border-2 border-white border-t-transparent"
                       />
                       Creating account...
                     </>
                   ) : (
                     <>
                       Create Account
-                      <ArrowRight className="w-5 h-5" />
+                      <ArrowRight className="h-5 w-5" />
                     </>
                   )}
                 </span>
@@ -395,7 +394,7 @@ export default function SignupPage() {
               Already have an account?{' '}
               <Link
                 href="/login"
-                className="font-semibold text-green-400 hover:text-green-300 transition-colors"
+                className="font-semibold text-green-400 transition-colors hover:text-green-300"
               >
                 Sign in
               </Link>
@@ -412,14 +411,14 @@ export default function SignupPage() {
         >
           <Link
             href="/"
-            className="text-sm text-gray-400 hover:text-white transition-colors flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 text-sm text-gray-400 transition-colors hover:text-white"
           >
             ← Back to home
           </Link>
         </motion.div>
       </motion.div>
     </div>
-  )
+  );
 }
 
 // Made with Bob

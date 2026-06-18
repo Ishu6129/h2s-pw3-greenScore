@@ -53,7 +53,7 @@ describe('Demo Login API Route', () => {
 
     const res = await POST(req);
     expect(res.status).toBe(401);
-    
+
     const body = await res.json();
     expect(body.success).toBe(false);
     expect(body.error).toBe('Invalid credentials');

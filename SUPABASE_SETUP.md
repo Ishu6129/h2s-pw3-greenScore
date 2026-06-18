@@ -40,20 +40,23 @@ You're getting the error: `"provider is not enabled"` because the email authenti
 1. **Go to Authentication → URL Configuration**
 
 2. **Add Site URLs**:
+
    ```
    Site URL: http://localhost:3000
    ```
 
 3. **Add Redirect URLs**:
+
    ```
    http://localhost:3000/**
    http://localhost:3000/auth/callback
    ```
 
 4. **For Production** (after deploying):
+
    ```
    Site URL: https://your-app.vercel.app
-   
+
    Redirect URLs:
    https://your-app.vercel.app/**
    https://your-app.vercel.app/auth/callback
@@ -90,21 +93,25 @@ You're getting the error: `"provider is not enabled"` because the email authenti
 ### Error: "provider is not enabled"
 
 **Solution**: Enable Email provider in Supabase Dashboard
+
 - Authentication → Providers → Email → Enable
 
 ### Error: "Email not confirmed"
 
 **Solution**: Disable email confirmations for testing
+
 - Authentication → Settings → Enable email confirmations → OFF
 
 ### Error: "Invalid redirect URL"
 
 **Solution**: Add your URL to allowed redirects
+
 - Authentication → URL Configuration → Add redirect URLs
 
 ### Error: "User already registered"
 
 **Solution**: Either:
+
 1. Use a different email
 2. Delete the user from Supabase Dashboard
 3. Use the login page instead
@@ -125,6 +132,7 @@ You're getting the error: `"provider is not enabled"` because the email authenti
 ## 📸 Visual Guide
 
 ### Step 1: Find Authentication
+
 ```
 Supabase Dashboard
 └── [Left Sidebar]
@@ -133,6 +141,7 @@ Supabase Dashboard
 ```
 
 ### Step 2: Enable Email
+
 ```
 Providers Page
 └── Email
@@ -141,6 +150,7 @@ Providers Page
 ```
 
 ### Step 3: Configure Settings
+
 ```
 Authentication
 └── Settings
@@ -160,10 +170,12 @@ Once email provider is enabled:
 ## 🔐 Security Notes
 
 ### For Development
+
 - Email confirmations: **OFF** (faster testing)
 - Password requirements: **Minimum 6 characters**
 
 ### For Production
+
 - Email confirmations: **ON** (recommended)
 - Password requirements: **Strong passwords**
 - Enable 2FA (optional)
@@ -172,12 +184,14 @@ Once email provider is enabled:
 ## 📧 Email Provider Options
 
 ### Default (Supabase Email)
+
 - ✅ Works out of the box
 - ✅ No configuration needed
 - ⚠️ Limited to 3 emails/hour (free tier)
 - ⚠️ May go to spam
 
 ### Custom SMTP (Recommended for Production)
+
 1. Go to Authentication → Settings
 2. Scroll to "SMTP Settings"
 3. Configure your email provider:
@@ -211,16 +225,19 @@ Before deploying to production:
 ## 🆘 Still Having Issues?
 
 ### Check Supabase Logs
+
 1. Go to Supabase Dashboard
 2. Click "Logs" in left sidebar
 3. Look for authentication errors
 
 ### Check Browser Console
+
 1. Open DevTools (F12)
 2. Go to Console tab
 3. Look for error messages
 
 ### Check Network Tab
+
 1. Open DevTools (F12)
 2. Go to Network tab
 3. Look for failed requests
@@ -229,6 +246,7 @@ Before deploying to production:
 ## 📞 Support
 
 If you're still stuck:
+
 1. Check Supabase documentation: https://supabase.com/docs/guides/auth
 2. Join Supabase Discord: https://discord.supabase.com
 3. Check GitHub issues: https://github.com/supabase/supabase/issues

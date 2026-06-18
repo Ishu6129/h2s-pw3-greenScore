@@ -5,6 +5,7 @@
 ### ✅ Implemented Features
 
 #### User Features
+
 1. **Authentication System**
    - Email/Password signup and login
    - Social auth (Google, GitHub)
@@ -52,6 +53,7 @@
    - Weekly action plans
 
 #### Admin Features
+
 1. **Admin Dashboard**
    - User analytics
    - Activity monitoring
@@ -127,8 +129,8 @@ After running migrations, create an admin user:
 ```sql
 -- First, sign up a user through the app
 -- Then run this to make them admin:
-UPDATE users 
-SET role = 'admin' 
+UPDATE users
+SET role = 'admin'
 WHERE email = 'your-admin-email@example.com';
 ```
 
@@ -173,6 +175,7 @@ NEXT_PUBLIC_GA_ID=your_google_analytics_id
 ### Option 1: Vercel (Recommended)
 
 1. **Push to GitHub**
+
    ```bash
    git init
    git add .
@@ -219,6 +222,7 @@ CMD ["npm", "start"]
 ```
 
 Deploy:
+
 ```bash
 docker build -t greenscore .
 docker run -p 3000:3000 --env-file .env.local greenscore
@@ -352,6 +356,7 @@ docker run -p 3000:3000 --env-file .env.local greenscore
 ## 📊 Admin Dashboard Features
 
 ### User Management
+
 - View all users
 - Search and filter
 - User details
@@ -360,6 +365,7 @@ docker run -p 3000:3000 --env-file .env.local greenscore
 - Export user data
 
 ### Analytics
+
 - Total users
 - Active users (DAU/MAU)
 - Carbon offset statistics
@@ -369,6 +375,7 @@ docker run -p 3000:3000 --env-file .env.local greenscore
 - Revenue (if applicable)
 
 ### Broadcast System
+
 - Create announcements
 - Target audiences:
   - All users
@@ -380,6 +387,7 @@ docker run -p 3000:3000 --env-file .env.local greenscore
 - View broadcast history
 
 ### Content Management
+
 - Manage challenges
 - Update marketplace items
 - Configure system settings
@@ -387,6 +395,7 @@ docker run -p 3000:3000 --env-file .env.local greenscore
 - Manage AI suggestions
 
 ### System Health
+
 - Database status
 - API response times
 - Error rates
@@ -427,15 +436,13 @@ docker run -p 3000:3000 --env-file .env.local greenscore
 
 ```typescript
 // Send notification
-await supabase
-  .from('user_notifications')
-  .insert({
-    user_id: userId,
-    title: 'Achievement Unlocked!',
-    message: 'You completed the 7-day streak challenge',
-    type: 'achievement',
-    action_url: '/challenges'
-  });
+await supabase.from('user_notifications').insert({
+  user_id: userId,
+  title: 'Achievement Unlocked!',
+  message: 'You completed the 7-day streak challenge',
+  type: 'achievement',
+  action_url: '/challenges',
+});
 
 // Mark as read
 await supabase
@@ -478,13 +485,11 @@ async function generateDailySuggestions(userId: string) {
   const suggestions = JSON.parse(result.response.text());
 
   // Save to database
-  await supabase
-    .from('daily_ai_suggestions')
-    .insert({
-      user_id: userId,
-      date: new Date().toISOString().split('T')[0],
-      suggestions
-    });
+  await supabase.from('daily_ai_suggestions').insert({
+    user_id: userId,
+    date: new Date().toISOString().split('T')[0],
+    suggestions,
+  });
 
   return suggestions;
 }
@@ -553,27 +558,32 @@ async function generateDailySuggestions(userId: string) {
 ## 🧪 Testing Strategy
 
 ### Unit Tests
+
 ```bash
 npm test
 ```
 
 Test coverage:
+
 - Carbon calculator: 100%
 - XP calculator: 100%
 - Utility functions: 100%
 
 ### Integration Tests
+
 - Authentication flow
 - Activity logging
 - Challenge completion
 - Notification delivery
 
 ### E2E Tests
+
 ```bash
 npm run test:e2e
 ```
 
 Critical user flows:
+
 - Signup → Login → Log Activity → Complete Challenge
 - Admin → Create Broadcast → Users Receive Notification
 
@@ -582,6 +592,7 @@ Critical user flows:
 ## 📱 Mobile App (Future)
 
 ### React Native Version
+
 - Shared business logic
 - Native animations
 - Push notifications
@@ -590,6 +601,7 @@ Critical user flows:
 - Location services
 
 ### Progressive Web App
+
 - Install prompt
 - Offline functionality
 - Push notifications
@@ -601,6 +613,7 @@ Critical user flows:
 ## 🎯 Launch Checklist
 
 ### Pre-Launch
+
 - [ ] Run all database migrations
 - [ ] Create admin user
 - [ ] Add environment variables
@@ -613,6 +626,7 @@ Critical user flows:
 - [ ] Mobile testing
 
 ### Launch Day
+
 - [ ] Deploy to production
 - [ ] Configure custom domain
 - [ ] Set up monitoring
@@ -622,6 +636,7 @@ Critical user flows:
 - [ ] Check performance metrics
 
 ### Post-Launch
+
 - [ ] Monitor user feedback
 - [ ] Track key metrics
 - [ ] Fix critical bugs
@@ -633,18 +648,21 @@ Critical user flows:
 ## 📞 Support & Maintenance
 
 ### Monitoring
+
 - Set up alerts for errors
 - Monitor API response times
 - Track database performance
 - Watch storage usage
 
 ### Backup Strategy
+
 - Daily database backups
 - Point-in-time recovery
 - Disaster recovery plan
 - Data retention policy
 
 ### Updates
+
 - Security patches
 - Feature releases
 - Bug fixes
@@ -667,6 +685,7 @@ Your GreenScore app is now ready for production deployment with:
 ✅ Performance optimization
 
 **Next Steps:**
+
 1. Add your Supabase anon key to `.env.local`
 2. Run all database migrations
 3. Create your first admin user

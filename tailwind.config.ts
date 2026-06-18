@@ -40,10 +40,10 @@ const config: Config = {
         mono: ['var(--font-jetbrains-mono)', 'monospace'],
       },
       animation: {
-        'shimmer': 'shimmer 2s linear infinite',
+        shimmer: 'shimmer 2s linear infinite',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'bounce-slow': 'bounce 2s infinite',
-        'confetti': 'confetti-fall 3s ease-in-out forwards',
+        confetti: 'confetti-fall 3s ease-in-out forwards',
         'fade-in': 'fade-in 0.5s ease-out',
         'slide-up': 'slide-up 0.5s ease-out',
         'scale-in': 'scale-in 0.3s ease-out',
@@ -73,7 +73,8 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'shimmer-gradient': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+        'shimmer-gradient':
+          'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
       },
       backdropBlur: {
         xs: '2px',

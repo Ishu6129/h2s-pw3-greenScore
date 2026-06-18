@@ -13,6 +13,7 @@ npm install
 ```
 
 This will install all required packages including:
+
 - Next.js 15
 - React 18
 - TypeScript
@@ -74,19 +75,23 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Step 5: Verify Setup
 
 ### Check Database Connection
+
 1. Go to http://localhost:3000
 2. Landing page should load without errors
 3. Check browser console for any errors
 
 ### Test Database Schema
+
 Run this query in Supabase SQL Editor to verify tables:
+
 ```sql
-SELECT table_name 
-FROM information_schema.tables 
+SELECT table_name
+FROM information_schema.tables
 WHERE table_schema = 'public';
 ```
 
 You should see:
+
 - users
 - activities
 - challenges
@@ -100,21 +105,28 @@ You should see:
 ## Common Issues & Solutions
 
 ### Issue: "type geography does not exist"
+
 **Solution:** The migration files have been updated to use `latitude` and `longitude` columns instead of PostGIS geography type. Re-run the migrations.
 
 ### Issue: Tailwind CSS not working
-**Solution:** 
+
+**Solution:**
+
 1. Make sure `npm install` completed successfully
 2. Restart the dev server: `npm run dev`
 3. Clear `.next` folder: `rm -rf .next` (or delete manually)
 
 ### Issue: TypeScript errors
+
 **Solution:**
+
 1. Wait for `npm install` to complete
 2. Restart VS Code TypeScript server: Cmd/Ctrl + Shift + P → "TypeScript: Restart TS Server"
 
 ### Issue: Supabase connection errors
+
 **Solution:**
+
 1. Verify `.env.local` has correct credentials
 2. Check Supabase project is active
 3. Verify RLS policies are enabled
@@ -193,6 +205,7 @@ npm run test:e2e
 4. Deploy!
 
 Vercel will automatically:
+
 - Build the project
 - Set up SSL
 - Configure CDN
@@ -201,6 +214,7 @@ Vercel will automatically:
 ## Support
 
 For issues or questions:
+
 - Check `TECHNICAL_ARCHITECTURE.md` for detailed specs
 - Review `HACKATHON_STRATEGY.md` for feature details
 - Consult Next.js docs: https://nextjs.org/docs

@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} font-sans bg-neutral-950 text-neutral-50 antialiased`}
+        className={`${inter.variable} ${jetbrainsMono.variable} bg-neutral-950 font-sans text-neutral-50 antialiased`}
       >
         {children}
       </body>

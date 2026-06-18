@@ -1,14 +1,14 @@
-import { createClient } from '@/lib/supabase/server'
-import { NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server';
+import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
-  const requestUrl = new URL(request.url)
-  const code = requestUrl.searchParams.get('code')
-  const origin = requestUrl.origin
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get('code');
+  const origin = requestUrl.origin;
 
   if (code) {
-    const supabase = await createClient()
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error && data.user) {
       // Check if user profile exists
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
         .from('users')
         .select('id')
         .eq('id', data.user.id)
-        .single()
+        .single();
 
       // Create profile if it doesn't exist (for OAuth users)
       if (!existingUser) {
@@ -30,15 +30,15 @@ export async function GET(request: Request) {
           level: 1,
           current_streak: 0,
           longest_streak: 0,
-        })
+        });
       }
 
-      return NextResponse.redirect(`${origin}/dashboard`)
+      return NextResponse.redirect(`${origin}/dashboard`);
     }
   }
 
   // Return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/login?error=auth_failed`)
+  return NextResponse.redirect(`${origin}/login?error=auth_failed`);
 }
 
 // Made with Bob

@@ -5,11 +5,13 @@
 ### 1. Build Cache Corruption
 
 **Symptoms:**
+
 - `Cannot find module './331.js'` errors
 - `ENOENT: no such file or directory` errors
 - Pages returning 404 or 500 errors
 
 **Solution:**
+
 ```bash
 # PowerShell (Windows)
 Remove-Item -Recurse -Force .next
@@ -23,6 +25,7 @@ npm run dev
 ### 2. Next.js Config Warning
 
 **Symptoms:**
+
 - `Invalid next.config.js options detected: Unrecognized key(s) in object: 'swcMinify'`
 
 **Solution:**
@@ -31,9 +34,11 @@ The `swcMinify` option is deprecated in Next.js 15. It's been removed from the c
 ### 3. Port Already in Use
 
 **Symptoms:**
+
 - `Port 3000 is in use by process XXXX`
 
 **Solutions:**
+
 ```bash
 # Option 1: Kill the process (Windows)
 netstat -ano | findstr :3000
@@ -48,10 +53,12 @@ npm run dev -- -p 3001
 ### 4. TypeScript Errors
 
 **Symptoms:**
+
 - Type errors during build
 - `Cannot find module` errors
 
 **Solution:**
+
 ```bash
 # Regenerate TypeScript types
 npm run build
@@ -65,6 +72,7 @@ npm install
 ### 5. Supabase Connection Issues
 
 **Symptoms:**
+
 - `Failed to fetch` errors
 - Authentication not working
 - Database queries failing
@@ -72,6 +80,7 @@ npm install
 **Solutions:**
 
 1. **Check Environment Variables:**
+
 ```bash
 # Verify .env file exists and has correct values
 cat .env  # Mac/Linux
@@ -79,15 +88,17 @@ type .env  # Windows
 ```
 
 2. **Verify Supabase URL:**
+
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://kvqyrjjfyhfoohrqoobu.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
 ```
 
 3. **Test Connection:**
-Visit `http://localhost:3000/test` to verify database connection
+   Visit `http://localhost:3000/test` to verify database connection
 
 4. **Check RLS Policies:**
+
 - Go to Supabase Dashboard → Authentication → Policies
 - Ensure RLS is enabled on all tables
 - Verify policies allow authenticated users
@@ -95,10 +106,12 @@ Visit `http://localhost:3000/test` to verify database connection
 ### 6. Authentication Redirect Loop
 
 **Symptoms:**
+
 - Infinite redirects between login and dashboard
 - Can't access any pages
 
 **Solution:**
+
 ```bash
 # Clear browser cookies
 # In Chrome: DevTools → Application → Cookies → Clear All
@@ -112,10 +125,12 @@ Visit `http://localhost:3000/test` to verify database connection
 ### 7. Module Not Found Errors
 
 **Symptoms:**
+
 - `Cannot find module '@/lib/...'`
 - Import errors
 
 **Solution:**
+
 ```bash
 # Check tsconfig.json paths are correct
 # Verify file exists at the path
@@ -126,13 +141,15 @@ Visit `http://localhost:3000/test` to verify database connection
 ### 8. Framer Motion Errors
 
 **Symptoms:**
+
 - `motion is not defined`
 - Animation errors
 
 **Solution:**
+
 ```typescript
 // Correct import
-import { motion } from 'framer-motion'
+import { motion } from 'framer-motion';
 
 // NOT from 'motion/react'
 ```
@@ -140,23 +157,28 @@ import { motion } from 'framer-motion'
 ### 9. Deployment Fails on Vercel
 
 **Symptoms:**
+
 - Build fails on Vercel
 - Works locally but not in production
 
 **Solutions:**
 
 1. **Check Build Locally:**
+
 ```bash
 npm run build
 ```
 
 2. **Environment Variables:**
+
 - Add all env vars in Vercel dashboard
 - Don't include quotes around values
 
 3. **Node Version:**
+
 - Ensure Vercel uses Node 18+
 - Set in `package.json`:
+
 ```json
 "engines": {
   "node": ">=18.0.0"
@@ -166,11 +188,13 @@ npm run build
 ### 10. Database Migration Issues
 
 **Symptoms:**
+
 - Tables don't exist
 - RLS policy errors
 - Permission denied
 
 **Solution:**
+
 ```sql
 -- Re-run migrations in Supabase SQL Editor
 -- In order:
@@ -184,6 +208,7 @@ npm run build
 ## Quick Fixes
 
 ### Reset Everything
+
 ```bash
 # Nuclear option - start fresh
 Remove-Item -Recurse -Force .next
@@ -194,6 +219,7 @@ npm run dev
 ```
 
 ### Check All Services
+
 ```bash
 # 1. Node version
 node --version  # Should be 18+
@@ -210,6 +236,7 @@ cat .env   # Mac/Linux
 ```
 
 ### Verify Installation
+
 ```bash
 # Check all dependencies installed
 npm list --depth=0
@@ -224,10 +251,12 @@ npm update
 ## Development Tips
 
 ### 1. Use Correct Terminal
+
 - **Windows**: Use PowerShell or Git Bash
 - **Mac/Linux**: Use Terminal or Bash
 
 ### 2. Clear Cache Regularly
+
 ```bash
 # Before important tests
 Remove-Item -Recurse -Force .next
@@ -235,15 +264,18 @@ npm run dev
 ```
 
 ### 3. Check Logs
+
 - **Browser Console**: F12 → Console
 - **Terminal**: Watch for errors
 - **Supabase**: Dashboard → Logs
 
 ### 4. Test in Incognito
+
 - Avoids cookie/cache issues
 - Fresh authentication state
 
 ### 5. Use VS Code Extensions
+
 - ESLint
 - Prettier
 - TypeScript and JavaScript Language Features
@@ -252,16 +284,19 @@ npm run dev
 ## Getting Help
 
 ### 1. Check Documentation
+
 - [Next.js Docs](https://nextjs.org/docs)
 - [Supabase Docs](https://supabase.com/docs)
 - [Tailwind Docs](https://tailwindcss.com/docs)
 
 ### 2. Search Issues
+
 - GitHub Issues for each library
 - Stack Overflow
 - Next.js Discussions
 
 ### 3. Debug Steps
+
 1. Read the error message carefully
 2. Check the file and line number
 3. Verify imports are correct
@@ -273,6 +308,7 @@ npm run dev
 ## Prevention
 
 ### 1. Regular Maintenance
+
 ```bash
 # Weekly
 npm audit fix
@@ -284,6 +320,7 @@ npm run lint
 ```
 
 ### 2. Git Workflow
+
 ```bash
 # Commit often
 git add .
@@ -294,11 +331,13 @@ git checkout -b feature/new-feature
 ```
 
 ### 3. Environment Management
+
 - Keep `.env.example` updated
 - Never commit `.env` to git
 - Document all env vars
 
 ### 4. Testing
+
 - Test locally before deploying
 - Test in production after deploying
 - Test on multiple devices/browsers

@@ -1,52 +1,57 @@
-'use client'
+'use client';
 
-import { useEffect, useState, useMemo } from 'react'
-import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
-import DashboardClient from '../dashboard/dashboard-client'
-import { User } from '@/types'
+import { useEffect, useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import DashboardClient from '../dashboard/dashboard-client';
+import { User } from '@/types';
 
 export default function DemoDashboardPage() {
-  const router = useRouter()
-  const [demoUser, setDemoUser] = useState<User | null>(null)
+  const router = useRouter();
+  const [demoUser, setDemoUser] = useState<User | null>(null);
 
   useEffect(() => {
     // Check for demo user in session storage
-    const storedUser = sessionStorage.getItem('demoUser')
-    
+    const storedUser = sessionStorage.getItem('demoUser');
+
     if (storedUser) {
-      const user = JSON.parse(storedUser)
-      setDemoUser(user)
+      const user = JSON.parse(storedUser);
+      setDemoUser(user);
     } else {
       // No demo user, redirect to login
-      router.push('/login')
+      router.push('/login');
     }
-  }, [router])
+  }, [router]);
 
   // Stable particles for loading screen
-  const loadingParticles = useMemo(() =>
-    Array.from({ length: 20 }, (_, i) => ({
-      left: `${(i * 5 + 5) % 100}%`,
-      top: `${(i * 7 + 10) % 100}%`,
-      delay: (i * 0.15) % 3,
-      duration: 4 + (i % 4)
-    }))
-  , [])
+  const loadingParticles = useMemo(
+    () =>
+      Array.from({ length: 20 }, (_, i) => ({
+        left: `${(i * 5 + 5) % 100}%`,
+        top: `${(i * 7 + 10) % 100}%`,
+        delay: (i * 0.15) % 3,
+        duration: 4 + (i % 4),
+      })),
+    []
+  );
 
   if (!demoUser) {
     return (
-      <div className="min-h-screen relative overflow-hidden flex items-center justify-center">
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
         {/* Animated Background */}
         <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900">
           {/* Animated Orbs */}
-          <div className="absolute top-0 left-0 w-96 h-96 bg-green-500/30 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-          
+          <div className="absolute left-0 top-0 h-96 w-96 animate-pulse rounded-full bg-green-500/30 blur-3xl" />
+          <div
+            className="absolute bottom-0 right-0 h-96 w-96 animate-pulse rounded-full bg-emerald-500/30 blur-3xl"
+            style={{ animationDelay: '1s' }}
+          />
+
           {/* Floating Particles */}
           {loadingParticles.map((particle, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-green-400/40 rounded-full"
+              className="absolute h-1 w-1 rounded-full bg-green-400/40"
               style={{ left: particle.left, top: particle.top }}
               animate={{
                 y: [0, -30, 0],
@@ -59,7 +64,7 @@ export default function DemoDashboardPage() {
               }}
             />
           ))}
-          
+
           {/* Grid Pattern */}
           <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
         </div>
@@ -68,19 +73,19 @@ export default function DemoDashboardPage() {
         <div className="relative text-center">
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="rounded-full h-16 w-16 border-4 border-green-500/30 border-t-green-400 mx-auto mb-4"
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            className="mx-auto mb-4 h-16 w-16 rounded-full border-4 border-green-500/30 border-t-green-400"
           />
           <motion.p
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="text-gray-300 text-lg font-medium"
+            className="text-lg font-medium text-gray-300"
           >
             Loading your dashboard...
           </motion.p>
         </div>
       </div>
-    )
+    );
   }
 
   // Mock data for demo user
@@ -111,7 +116,7 @@ export default function DemoDashboardPage() {
       notes: null,
       created_at: new Date(Date.now() - 86400000).toISOString(),
     },
-  ]
+  ];
 
   const mockChallenges = [
     {
@@ -128,11 +133,13 @@ export default function DemoDashboardPage() {
       icon: '🔥',
       is_active: true,
       created_at: new Date().toISOString(),
-      user_challenges: [{
-        progress: 7,
-        completed: true,
-        completed_at: new Date().toISOString(),
-      }],
+      user_challenges: [
+        {
+          progress: 7,
+          completed: true,
+          completed_at: new Date().toISOString(),
+        },
+      ],
     },
     {
       id: '2',
@@ -148,13 +155,15 @@ export default function DemoDashboardPage() {
       icon: '🚴',
       is_active: true,
       created_at: new Date().toISOString(),
-      user_challenges: [{
-        progress: 35,
-        completed: false,
-        completed_at: null,
-      }],
+      user_challenges: [
+        {
+          progress: 35,
+          completed: false,
+          completed_at: null,
+        },
+      ],
     },
-  ]
+  ];
 
   const mockMarketplaceItems = [
     {
@@ -179,7 +188,7 @@ export default function DemoDashboardPage() {
       metadata: null,
       created_at: new Date().toISOString(),
     },
-  ]
+  ];
 
   return (
     <DashboardClient
@@ -188,7 +197,7 @@ export default function DemoDashboardPage() {
       challenges={mockChallenges}
       marketplaceItems={mockMarketplaceItems}
     />
-  )
+  );
 }
 
 // Made with Bob

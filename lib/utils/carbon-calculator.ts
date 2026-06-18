@@ -8,7 +8,7 @@ export const CARBON_FACTORS = {
   // Transportation (kg CO2 saved per km vs. car)
   cycling: 0.21, // Average car emits 0.21 kg CO2/km
   public_transport: 0.14, // 0.14 kg CO2 saved per km vs. car
-  
+
   // Recycling (kg CO2 saved per item)
   recycling: {
     plastic: 0.5,
@@ -17,16 +17,16 @@ export const CARBON_FACTORS = {
     metal: 0.8,
     average: 0.45,
   },
-  
+
   // Energy (kg CO2 saved per kWh)
   energy_saving: 0.5, // Average grid electricity
-  
+
   // Food (kg CO2 saved per meal)
   plant_based_meal: 2.5, // vs. meat-based meal
-  
+
   // Water (kg CO2 saved per liter)
   water_conservation: 0.0003, // Energy for water treatment
-  
+
   // Shopping (kg CO2 saved per item)
   sustainable_shopping: 1.5, // vs. new item
 } as const;
@@ -37,10 +37,7 @@ export const CARBON_FACTORS = {
  * @param amount - Amount of activity (km, items, kWh, etc.)
  * @returns Carbon offset in kg CO2
  */
-export function calculateCarbonOffset(
-  activityType: ActivityType,
-  amount: number
-): number {
+export function calculateCarbonOffset(activityType: ActivityType, amount: number): number {
   if (amount <= 0) {
     throw new Error('Amount must be positive');
   }
@@ -83,16 +80,13 @@ export function calculateCarbonOffset(
  * @param baseline - User's baseline carbon footprint in kg CO2/year
  * @returns Carbon score (300-850)
  */
-export function calculateCarbonScore(
-  totalOffset: number,
-  baseline: number = 10000
-): number {
+export function calculateCarbonScore(totalOffset: number, baseline: number = 10000): number {
   // Calculate percentage of baseline offset
   const percentageOffset = (totalOffset / baseline) * 100;
-  
+
   // Map percentage to score (0% = 300, 100% = 850)
-  const score = 300 + (percentageOffset * 5.5);
-  
+  const score = 300 + percentageOffset * 5.5;
+
   // Clamp between 300 and 850
   return Math.min(850, Math.max(300, Math.round(score)));
 }
@@ -112,7 +106,7 @@ export function getActivityUnit(activityType: ActivityType): string {
     water_conservation: 'liters',
     sustainable_shopping: 'items',
   };
-  
+
   return units[activityType];
 }
 
@@ -131,7 +125,7 @@ export function getActivityDisplayName(activityType: ActivityType): string {
     water_conservation: 'Water Conservation',
     sustainable_shopping: 'Sustainable Shopping',
   };
-  
+
   return names[activityType];
 }
 

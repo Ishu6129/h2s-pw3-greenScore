@@ -27,7 +27,7 @@ sharp(Buffer.from(svg))
   .png()
   .toFile(path.join(publicDir, 'icon-192.png'))
   .then(() => console.log('✅ icon-192.png created'))
-  .catch(err => console.error('❌ Error creating icon-192.png:', err));
+  .catch((err) => console.error('❌ Error creating icon-192.png:', err));
 
 // Generate 512x512 icon
 sharp(Buffer.from(svg))
@@ -35,6 +35,6 @@ sharp(Buffer.from(svg))
   .png()
   .toFile(path.join(publicDir, 'icon-512.png'))
   .then(() => console.log('✅ icon-512.png created'))
-  .catch(err => console.error('❌ Error creating icon-512.png:', err));
+  .catch((err) => console.error('❌ Error creating icon-512.png:', err));
 
 // Made with Bob

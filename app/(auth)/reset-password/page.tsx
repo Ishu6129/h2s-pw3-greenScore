@@ -1,81 +1,83 @@
-'use client'
+'use client';
 
-import { useState, useMemo } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Lock, CheckCircle } from 'lucide-react'
+import { useState, useMemo } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Lock, CheckCircle } from 'lucide-react';
 
 export default function ResetPasswordPage() {
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [focusedField, setFocusedField] = useState<string | null>(null)
-  const router = useRouter()
-  const supabase = createClient()
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const router = useRouter();
+  const supabase = createClient();
 
   // Generate stable particle positions
-  const particles = useMemo(() =>
-    Array.from({ length: 15 }, (_, i) => ({
-      left: `${(i * 7 + 10) % 100}%`,
-      top: `${(i * 13 + 5) % 100}%`,
-      delay: (i * 0.2) % 2,
-      duration: 3 + (i % 3)
-    }))
-  , [])
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 15 }, (_, i) => ({
+        left: `${(i * 7 + 10) % 100}%`,
+        top: `${(i * 13 + 5) % 100}%`,
+        delay: (i * 0.2) % 2,
+        duration: 3 + (i % 3),
+      })),
+    []
+  );
 
   const handleResetPassword = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
-      setLoading(false)
-      return
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
     }
 
     if (password.length < 8) {
-      setError('Password must be at least 8 characters')
-      setLoading(false)
-      return
+      setError('Password must be at least 8 characters');
+      setLoading(false);
+      return;
     }
 
     try {
       const { error } = await supabase.auth.updateUser({
         password: password,
-      })
+      });
 
-      if (error) throw error
+      if (error) throw error;
 
-      setSuccess(true)
+      setSuccess(true);
       setTimeout(() => {
-        router.push('/login')
-      }, 2000)
+        router.push('/login');
+      }, 2000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to reset password')
+      setError(err instanceof Error ? err.message : 'Failed to reset password');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (success) {
     return (
-      <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-4">
         {/* Animated Dark Background */}
         <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900">
           <motion.div
             animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 left-20 w-96 h-96 bg-green-500/20 rounded-full blur-3xl"
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute left-20 top-20 h-96 w-96 rounded-full bg-green-500/20 blur-3xl"
           />
           <motion.div
             animate={{ y: [0, 30, 0], x: [0, -20, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-20 right-20 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl"
           />
           <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
         </div>
@@ -84,64 +86,62 @@ export default function ResetPasswordPage() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-md relative z-10"
+          className="relative z-10 w-full max-w-md"
         >
           <div className="relative">
             <motion.div
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-3xl blur opacity-75"
+              className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-green-500 to-emerald-500 opacity-75 blur"
             />
-            
-            <div className="relative bg-gray-900/40 backdrop-blur-2xl rounded-3xl shadow-2xl p-8 border border-green-500/20 text-center">
+
+            <div className="relative rounded-3xl border border-green-500/20 bg-gray-900/40 p-8 text-center shadow-2xl backdrop-blur-2xl">
               <motion.div
                 initial={{ scale: 0, rotate: 0 }}
                 animate={{ scale: 1, rotate: 360 }}
                 transition={{ type: 'spring', stiffness: 200, duration: 0.8 }}
-                className="flex justify-center mb-6"
+                className="mb-6 flex justify-center"
               >
-                <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-12 h-12 text-green-400" />
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
+                  <CheckCircle className="h-12 w-12 text-green-400" />
                 </div>
               </motion.div>
 
-              <h1 className="text-3xl font-bold text-white mb-4">
-                Password Reset!
-              </h1>
-              <p className="text-gray-400 mb-8">
+              <h1 className="mb-4 text-3xl font-bold text-white">Password Reset!</h1>
+              <p className="mb-8 text-gray-400">
                 Your password has been successfully reset. Redirecting to login...
               </p>
 
               <div className="flex justify-center">
                 <motion.div
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full"
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  className="h-8 w-8 rounded-full border-2 border-green-500 border-t-transparent"
                 />
               </div>
             </div>
           </div>
         </motion.div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-4">
       {/* Animated Dark Background */}
       <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900">
         {/* Floating Orbs */}
         <motion.div
           animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-20 left-20 w-96 h-96 bg-green-500/20 rounded-full blur-3xl"
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute left-20 top-20 h-96 w-96 rounded-full bg-green-500/20 blur-3xl"
         />
         <motion.div
           animate={{ y: [0, 30, 0], x: [0, -20, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute bottom-20 right-20 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl"
         />
-        
+
         {/* Floating Particles */}
         {particles.map((particle, i) => (
           <motion.div
@@ -155,7 +155,7 @@ export default function ResetPasswordPage() {
               repeat: Infinity,
               delay: particle.delay,
             }}
-            className="absolute w-1 h-1 bg-green-400 rounded-full"
+            className="absolute h-1 w-1 rounded-full bg-green-400"
             style={{
               left: particle.left,
               top: particle.top,
@@ -171,7 +171,7 @@ export default function ResetPasswordPage() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md relative z-10"
+        className="relative z-10 w-full max-w-md"
       >
         {/* Glassmorphism Card */}
         <div className="relative">
@@ -179,23 +179,23 @@ export default function ResetPasswordPage() {
           <motion.div
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-3xl blur opacity-75"
+            className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-green-500 to-emerald-500 opacity-75 blur"
           />
-          
-          <div className="relative bg-gray-900/40 backdrop-blur-2xl rounded-3xl shadow-2xl p-8 border border-green-500/20">
+
+          <div className="relative rounded-3xl border border-green-500/20 bg-gray-900/40 p-8 shadow-2xl backdrop-blur-2xl">
             {/* Logo with Rotating Halo */}
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-              className="flex justify-center mb-8 relative"
+              className="relative mb-8 flex justify-center"
             >
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute w-24 h-24 border-2 border-green-500/30 rounded-full"
+                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                className="absolute h-24 w-24 rounded-full border-2 border-green-500/30"
               />
-              <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/50 relative z-10">
+              <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg shadow-green-500/50">
                 <span className="text-4xl">🔐</span>
               </div>
             </motion.div>
@@ -205,14 +205,10 @@ export default function ResetPasswordPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-center mb-8"
+              className="mb-8 text-center"
             >
-              <h1 className="text-3xl font-bold text-white mb-2">
-                Set New Password
-              </h1>
-              <p className="text-gray-400">
-                Choose a strong password for your account
-              </p>
+              <h1 className="mb-2 text-3xl font-bold text-white">Set New Password</h1>
+              <p className="text-gray-400">Choose a strong password for your account</p>
             </motion.div>
 
             {/* Error Message */}
@@ -220,7 +216,7 @@ export default function ResetPasswordPage() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm backdrop-blur-sm"
+                className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400 backdrop-blur-sm"
               >
                 {error}
               </motion.div>
@@ -235,21 +231,18 @@ export default function ResetPasswordPage() {
                 transition={{ delay: 0.4 }}
                 className="relative"
               >
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
+                <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-300">
                   New Password
                 </label>
                 <div className="relative">
                   {focusedField === 'password' && (
                     <motion.div
                       layoutId="inputGlow"
-                      className="absolute inset-0 bg-green-500/10 rounded-xl blur-xl"
+                      className="absolute inset-0 rounded-xl bg-green-500/10 blur-xl"
                     />
                   )}
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
-                    <Lock className="w-5 h-5 text-green-400" />
+                  <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2">
+                    <Lock className="h-5 w-5 text-green-400" />
                   </div>
                   <input
                     id="password"
@@ -260,13 +253,11 @@ export default function ResetPasswordPage() {
                     onBlur={() => setFocusedField(null)}
                     required
                     minLength={8}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-green-500/20 bg-gray-800/50 text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 relative"
+                    className="relative w-full rounded-xl border border-green-500/20 bg-gray-800/50 py-3 pl-12 pr-4 text-white placeholder-gray-500 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-green-500"
                     placeholder="••••••••"
                   />
                 </div>
-                <p className="mt-2 text-xs text-gray-500">
-                  Must be at least 8 characters
-                </p>
+                <p className="mt-2 text-xs text-gray-500">Must be at least 8 characters</p>
               </motion.div>
 
               {/* Confirm Password Field */}
@@ -278,7 +269,7 @@ export default function ResetPasswordPage() {
               >
                 <label
                   htmlFor="confirmPassword"
-                  className="block text-sm font-medium text-gray-300 mb-2"
+                  className="mb-2 block text-sm font-medium text-gray-300"
                 >
                   Confirm Password
                 </label>
@@ -286,11 +277,11 @@ export default function ResetPasswordPage() {
                   {focusedField === 'confirmPassword' && (
                     <motion.div
                       layoutId="inputGlow"
-                      className="absolute inset-0 bg-green-500/10 rounded-xl blur-xl"
+                      className="absolute inset-0 rounded-xl bg-green-500/10 blur-xl"
                     />
                   )}
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
-                    <Lock className="w-5 h-5 text-green-400" />
+                  <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2">
+                    <Lock className="h-5 w-5 text-green-400" />
                   </div>
                   <input
                     id="confirmPassword"
@@ -301,7 +292,7 @@ export default function ResetPasswordPage() {
                     onBlur={() => setFocusedField(null)}
                     required
                     minLength={8}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-green-500/20 bg-gray-800/50 text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 relative"
+                    className="relative w-full rounded-xl border border-green-500/20 bg-gray-800/50 py-3 pl-12 pr-4 text-white placeholder-gray-500 transition-all duration-200 focus:border-transparent focus:ring-2 focus:ring-green-500"
                     placeholder="••••••••"
                   />
                 </div>
@@ -316,7 +307,7 @@ export default function ResetPasswordPage() {
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl shadow-lg shadow-green-500/50 hover:shadow-xl hover:shadow-green-500/60 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
+                className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 px-4 py-3 font-semibold text-white shadow-lg shadow-green-500/50 transition-all duration-200 hover:shadow-xl hover:shadow-green-500/60 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500"
@@ -327,10 +318,7 @@ export default function ResetPasswordPage() {
                 <span className="relative z-10 flex items-center justify-center">
                   {loading ? (
                     <>
-                      <svg
-                        className="animate-spin h-5 w-5 mr-3"
-                        viewBox="0 0 24 24"
-                      >
+                      <svg className="mr-3 h-5 w-5 animate-spin" viewBox="0 0 24 24">
                         <circle
                           className="opacity-25"
                           cx="12"
@@ -365,7 +353,7 @@ export default function ResetPasswordPage() {
               Remember your password?{' '}
               <Link
                 href="/login"
-                className="font-semibold text-green-400 hover:text-green-300 transition-colors"
+                className="font-semibold text-green-400 transition-colors hover:text-green-300"
               >
                 Sign in
               </Link>
@@ -382,14 +370,14 @@ export default function ResetPasswordPage() {
         >
           <Link
             href="/"
-            className="text-sm text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2"
+            className="inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white"
           >
             <span>←</span> Back to home
           </Link>
         </motion.div>
       </motion.div>
     </div>
-  )
+  );
 }
 
 // Made with Bob
