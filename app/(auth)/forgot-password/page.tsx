@@ -37,8 +37,8 @@ export default function ForgotPasswordPage() {
       if (error) throw error
 
       setSuccess(true)
-    } catch (err: any) {
-      setError(err.message || 'Failed to send reset email')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to send reset email')
     } finally {
       setLoading(false)
     }
@@ -91,7 +91,7 @@ export default function ForgotPasswordPage() {
                 Check Your Email
               </h1>
               <p className="text-gray-400 mb-8">
-                We've sent a password reset link to <span className="text-green-400 font-semibold">{email}</span>
+                We&apos;ve sent a password reset link to <span className="text-green-400 font-semibold">{email}</span>
               </p>
 
               <Link

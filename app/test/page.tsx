@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { CheckCircle, XCircle, AlertCircle, RefreshCw } from 'lucide-react';
-
+import { Challenge, MarketplaceItem } from '@/types';
 interface TestResult {
   success: boolean;
   timestamp: string;
@@ -21,12 +21,12 @@ interface TestResult {
     challenges: {
       accessible: boolean;
       count: number;
-      sample: any;
+      sample: Challenge | null;
     };
     marketplace: {
       accessible: boolean;
       count: number;
-      sample: any;
+      sample: MarketplaceItem | null;
     };
   };
   recommendations: string[];

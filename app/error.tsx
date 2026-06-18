@@ -54,7 +54,7 @@ export default function Error({
             transition={{ delay: 0.4 }}
             className="text-gray-600 text-center mb-8"
           >
-            We encountered an unexpected error. Don't worry, we're on it!
+            We encountered an unexpected error. Don&apos;t worry, we&apos;re on it!
           </motion.p>
 
           {/* Error Details (Development Only) */}

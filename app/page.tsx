@@ -283,7 +283,7 @@ export default function LandingPage() {
               </h2>
               <p className="mx-auto mb-10 max-w-2xl text-xl text-gray-300 leading-relaxed">
                 Join the movement and start tracking your carbon footprint today.
-                It's free, fun, and makes a real difference.
+                It&apos;s free, fun, and makes a real difference.
               </p>
               <Link 
                 href="/signup" 

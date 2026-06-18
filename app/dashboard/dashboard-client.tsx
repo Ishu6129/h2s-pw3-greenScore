@@ -5,12 +5,21 @@ import { Leaf, TrendingUp, Award, Target, Zap, LogOut, Plus, Sparkles } from 'lu
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useState, useMemo } from 'react'
+import { User, Activity, Challenge, MarketplaceItem } from '@/types'
+
+interface DashboardChallenge extends Challenge {
+  user_challenges: {
+    progress: number
+    completed: boolean
+    completed_at: string | null
+  }[]
+}
 
 interface DashboardClientProps {
-  user: any
-  activities: any[]
-  challenges: any[]
-  marketplaceItems: any[]
+  user: User
+  activities: Activity[]
+  challenges: DashboardChallenge[]
+  marketplaceItems: MarketplaceItem[]
 }
 
 export default function DashboardClient({

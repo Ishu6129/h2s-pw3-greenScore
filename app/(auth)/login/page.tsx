@@ -63,9 +63,9 @@ export default function LoginPage() {
         await new Promise(resolve => setTimeout(resolve, 500))
         window.location.href = '/dashboard'
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Login error:', err)
-      setError(err.message || 'Failed to login')
+      setError(err instanceof Error ? err.message : 'Failed to login')
       setLoading(false)
     }
   }
@@ -311,7 +311,7 @@ export default function LoginPage() {
               transition={{ delay: 0.7 }}
               className="mt-6 text-center text-sm text-gray-400"
             >
-              Don't have an account?{' '}
+              {"Don't have an account? "}
               <Link
                 href="/signup"
                 className="font-semibold text-green-400 hover:text-green-300 transition-colors"

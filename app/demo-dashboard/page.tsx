@@ -4,10 +4,11 @@ import { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import DashboardClient from '../dashboard/dashboard-client'
+import { User } from '@/types'
 
 export default function DemoDashboardPage() {
   const router = useRouter()
-  const [demoUser, setDemoUser] = useState<any>(null)
+  const [demoUser, setDemoUser] = useState<User | null>(null)
 
   useEffect(() => {
     // Check for demo user in session storage
@@ -87,21 +88,27 @@ export default function DemoDashboardPage() {
     {
       id: '1',
       user_id: demoUser.id,
-      activity_type: 'cycling',
+      activity_type: 'cycling' as const,
       amount: 5,
       unit: 'km',
       carbon_offset: 1.2,
       xp_earned: 50,
+      logged_at: new Date().toISOString(),
+      photo_url: null,
+      notes: null,
       created_at: new Date().toISOString(),
     },
     {
       id: '2',
       user_id: demoUser.id,
-      activity_type: 'recycling',
+      activity_type: 'recycling' as const,
       amount: 2,
       unit: 'items',
       carbon_offset: 0.8,
       xp_earned: 40,
+      logged_at: new Date(Date.now() - 86400000).toISOString(),
+      photo_url: null,
+      notes: null,
       created_at: new Date(Date.now() - 86400000).toISOString(),
     },
   ]
@@ -111,10 +118,16 @@ export default function DemoDashboardPage() {
       id: '1',
       title: '7-Day Streak',
       description: 'Log activities for 7 consecutive days',
+      challenge_type: 'streak' as const,
+      activity_type: null,
       target_value: 7,
+      target_unit: 'days',
       xp_reward: 500,
+      start_date: new Date().toISOString(),
+      end_date: new Date().toISOString(),
       icon: '🔥',
       is_active: true,
+      created_at: new Date().toISOString(),
       user_challenges: [{
         progress: 7,
         completed: true,
@@ -125,10 +138,16 @@ export default function DemoDashboardPage() {
       id: '2',
       title: 'Cycle 50km',
       description: 'Cycle a total of 50 kilometers',
+      challenge_type: 'activity_specific' as const,
+      activity_type: 'cycling' as const,
       target_value: 50,
+      target_unit: 'km',
       xp_reward: 300,
+      start_date: new Date().toISOString(),
+      end_date: new Date().toISOString(),
       icon: '🚴',
       is_active: true,
+      created_at: new Date().toISOString(),
       user_challenges: [{
         progress: 35,
         completed: false,
@@ -142,19 +161,23 @@ export default function DemoDashboardPage() {
       id: '1',
       name: 'Green Warrior Badge',
       description: 'Show your commitment to the environment',
-      xp_cost: 1000,
-      item_type: 'badge',
+      price: 1000,
+      item_type: 'badge' as const,
       is_available: true,
-      image_url: null,
+      image_url: '',
+      metadata: null,
+      created_at: new Date().toISOString(),
     },
     {
       id: '2',
       name: 'Forest Theme',
       description: 'Beautiful forest-themed dashboard',
-      xp_cost: 500,
-      item_type: 'theme',
+      price: 500,
+      item_type: 'theme' as const,
       is_available: true,
-      image_url: null,
+      image_url: '',
+      metadata: null,
+      created_at: new Date().toISOString(),
     },
   ]
 
